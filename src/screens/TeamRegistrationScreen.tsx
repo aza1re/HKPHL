@@ -1,38 +1,37 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import React, { useState } from 'react'
+import { ScrollView, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
+import { teamsCol, addDoc } from '../firebase/firebase'
 
-const games = [
-  { id: '1', home: 'Team A', away: 'Team B', time: '14:00', period: '2', score: '1–2' },
-];
+export default function TeamRegistrationScreen() {
+  const [name, setName] = useState('')
+  const [division, setDivision] = useState('')
+  const [coach, setCoach] = useState('')
 
-export default function ScheduleScreen() {
+  async function onSubmit() {
+    try {
+      await addDoc(teamsCol, { name, division, coach, created: Date.now() })
+      Alert.alert("Success", "Team registered!")
+      setName(''); setDivision(''); setCoach('')
+    } catch (err) {
+      Alert.alert("Error", err.message)
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={games}
-        keyExtractor={i => i.id}
-        renderItem={({ item }) => (
-          <View style={styles.row}>
-            {/* replace with <Image source={{ uri: item.logo }} /> */}
-            <Text style={styles.team}>{item.home}</Text>
-            <Text>{item.score}</Text>
-            <Text style={styles.team}>{item.away}</Text>
-            <Text style={styles.info}>{item.time} · P{item.period}</Text>
-          </View>
-        )}
-      />
-    </View>
-  );
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.label}>Team Name</Text>
+      <TextInput style={styles.input} value={name} onChangeText={setName} />
+      <Text style={styles.label}>Division</Text>
+      <TextInput style={styles.input} value={division} onChangeText={setDivision} />
+      <Text style={styles.label}>Coach Name</Text>
+      <TextInput style={styles.input} value={coach} onChangeText={setCoach} />
+      <Button title="Submit Registration" onPress={onSubmit} />
+    </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  row: {
-    flexDirection: 'column',
-    padding: 12,
-    borderBottomWidth: 1,
-    borderColor: '#ddd'
-  },
-  team: { fontWeight: '600' },
-  info: { color: '#666', marginTop: 4 }
-});
+  container: { padding: 16 },
+  label: { marginTop: 12, fontWeight: '600' },
+  input: { borderWidth: 1, borderColor: '#ccc', padding: 8, borderRadius: 4 },
+})
