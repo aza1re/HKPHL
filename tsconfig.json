@@ -4,8 +4,9 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "global.d.ts",
     "App.tsx",
+    "global.d.ts",
+    "navigation-shims.d.ts",
     "src/**/*"
   ]
 }
