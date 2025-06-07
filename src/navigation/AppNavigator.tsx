@@ -4,80 +4,72 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-// screens…
-import TournamentsScreen  from '../screens/TournamentsScreen'
-import SummerCampsScreen  from '../screens/SummerCampsScreen'
-import HistoryScreen      from '../screens/HistoryScreen'
-import FavouritesScreen   from '../screens/FavouritesScreen'
-import LeagueScheduleScreen from '../screens/LeagueScheduleScreen'
-import HKPHLStatsScreen     from '../screens/HKPHLStatsScreen'
-import HKPHLPlayersScreen   from '../screens/HKPHLPlayersScreen'
-import TeamRegistrationScreen from '../screens/TeamRegistrationScreen'
-import NotificationsScreen     from '../screens/NotificationsScreen'
-import NeedHelpScreen          from '../screens/NeedHelpScreen'
-import ContactUsScreen         from '../screens/ContactUsScreen'
-
+import ChinaScreen from '../mainTabs/ChinaScreen'
+import KoreaScreen from '../mainTabs/KoreaScreen'
+import JapanScreen from '../mainTabs/JapanScreen'
+import MoreScreen from '../mainTabs/MoreScreen'
 
 // 1) Define ParamLists
-type DiscoverStackParamList = {
-  Tournaments: undefined
-  'Summer Camps': undefined
-  History: undefined
-  Favourites: undefined
+type ChinaStackParamList = {
+  China: undefined
 }
-type HKPHLStackParamList = {
-  'League Schedule': undefined
-  Stats: undefined
-  Players: undefined
+type KoreaStackParamList = {
+  Korea: undefined
+}
+type JapanStackParamList = {
+  Japan: undefined
 }
 type MoreStackParamList = {
+  More: undefined
   'Team Registration': undefined
   Notifications: undefined
   'Need Help': undefined
   'Contact Us': undefined
 }
 type RootTabParamList = {
-  Discover: undefined
-  HKPHL: undefined
+  China: undefined
+  Korea: undefined
+  Japan: undefined
   More: undefined
 }
 
 
 // 2) Create navigators, specifying <ParamList, ID>
-const DiscoverStackNav = createNativeStackNavigator<DiscoverStackParamList, 'DiscoverStack'>()
-const HKPHLStackNav    = createNativeStackNavigator<HKPHLStackParamList,    'HKPHLStack'>()
-const MoreStackNav     = createNativeStackNavigator<MoreStackParamList,     'MoreStack'>()
-const Tab              = createBottomTabNavigator<RootTabParamList, 'RootTabs'>()
+const ChinaStackNav = createNativeStackNavigator<ChinaStackParamList,'ChinaStack'>()
+const KoreaStackNav = createNativeStackNavigator<KoreaStackParamList,'KoreaStack'>()
+const JapanStackNav = createNativeStackNavigator<JapanStackParamList,'JapanStack'>()
+const MoreStackNav = createNativeStackNavigator<MoreStackParamList,'MoreStack'>()
+const Tab = createBottomTabNavigator<RootTabParamList, 'RootTabs'>()
 
 
-function DiscoverStack() {
+function ChinaStack() {
   return (
-    <DiscoverStackNav.Navigator id="DiscoverStack">
-      <DiscoverStackNav.Screen name="Tournaments"  component={TournamentsScreen}  />
-      <DiscoverStackNav.Screen name="Summer Camps" component={SummerCampsScreen}  />
-      <DiscoverStackNav.Screen name="History"      component={HistoryScreen}      />
-      <DiscoverStackNav.Screen name="Favourites"   component={FavouritesScreen}   />
-    </DiscoverStackNav.Navigator>
+    <ChinaStackNav.Navigator id="ChinaStack">
+      <ChinaStackNav.Screen name="China" component={ChinaScreen} />
+    </ChinaStackNav.Navigator>
   )
 }
 
-function HKPHLStack() {
+function KoreaStack() {
   return (
-    <HKPHLStackNav.Navigator id="HKPHLStack">
-      <HKPHLStackNav.Screen name="League Schedule" component={LeagueScheduleScreen} />
-      <HKPHLStackNav.Screen name="Stats"            component={HKPHLStatsScreen}     />
-      <HKPHLStackNav.Screen name="Players"          component={HKPHLPlayersScreen}   />
-    </HKPHLStackNav.Navigator>
+    <KoreaStackNav.Navigator id="KoreaStack">
+      <KoreaStackNav.Screen name="Korea" component={KoreaScreen} />
+    </KoreaStackNav.Navigator>
+  )
+}
+
+function JapanStack() {
+  return (
+    <JapanStackNav.Navigator id="JapanStack">
+      <JapanStackNav.Screen name="Japan" component={JapanScreen} />
+    </JapanStackNav.Navigator>
   )
 }
 
 function MoreStack() {
   return (
     <MoreStackNav.Navigator id="MoreStack">
-      <MoreStackNav.Screen name="Team Registration" component={TeamRegistrationScreen} />
-      <MoreStackNav.Screen name="Notifications"     component={NotificationsScreen}     />
-      <MoreStackNav.Screen name="Need Help"          component={NeedHelpScreen}          />
-      <MoreStackNav.Screen name="Contact Us"         component={ContactUsScreen}         />
+      <MoreStackNav.Screen name="More" component={MoreScreen} />
     </MoreStackNav.Navigator>
   )
 }
@@ -86,9 +78,10 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator id="RootTabs" screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Discover" component={DiscoverStack} />
-        <Tab.Screen name="HKPHL"     component={HKPHLStack}     />
-        <Tab.Screen name="More"      component={MoreStack}      />
+        <Tab.Screen name="China" component={ChinaStack} />
+        <Tab.Screen name="Korea" component={KoreaStack} />
+        <Tab.Screen name="Japan" component={JapanStack} />
+        <Tab.Screen name="More"  component={MoreStack} />
       </Tab.Navigator>
     </NavigationContainer>
   )
