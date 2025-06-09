@@ -1,8 +1,16 @@
 import React, { useLayoutEffect, useState } from 'react'
 import 'react-native-gesture-handler'
-import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'; // or 'react-native-vector-icons/Ionicons'
+import { View, Button, ScrollView, Text, TouchableOpacity, Image } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 
+// Map section headings to logo images
+const logoMap: Record<string, any> = {
+  'Tournaments': require('../../assets/favicon.png'),
+  'Leagues': require('../../assets/favicon.png'),
+  'Showcases': require('../../assets/favicon.png'),
+  'Camps': require('../../assets/favicon.png'),
+  // Add more if needed
+};
 
 const initialSections = [
   {
@@ -47,43 +55,52 @@ const initialSections = [
   },
 ];
 
-type JapanScreenProps = {
+type ChinaScreenProps = {
   navigation: any;
 };
 
-export default function JapanScreen({ navigation }: JapanScreenProps) {
+export default function ChinaScreen({ navigation }: ChinaScreenProps) {
   const [sections, setSections] = useState(initialSections);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={{ marginRight: 16 }}
-          onPress={() =>
-            navigation.navigate('AddEvent', {
-              onAdd: ({ type, name }) => {
-                setSections(prev =>
-                  prev.map(section =>
-                    section.heading === type
-                      ? {
-                          ...section,
-                          buttons: [
-                            ...section.buttons,
-                            { label: name, screen: name.replace(/\s+/g, '') },
-                          ],
-                        }
-                      : section
-                  )
-                );
-              },
-            })
-          }
-        >
-          <Ionicons name="add-circle-outline" size={28} color="black" />
-        </TouchableOpacity>
-      ),
+      headerRight: () =>
+        isAdmin ? (
+          <TouchableOpacity
+            style={{ marginRight: 16 }}
+            onPress={() =>
+              navigation.navigate('AddEvent', {
+                onAdd: ({ type, name }) => {
+                  setSections(prev =>
+                    prev.map(section =>
+                      section.heading === type
+                        ? {
+                            ...section,
+                            buttons: [
+                              ...section.buttons,
+                              { label: name, screen: name.replace(/\s+/g, '') },
+                            ],
+                          }
+                        : section
+                    )
+                  );
+                },
+              })
+            }
+          >
+            <Ionicons name="add-circle-outline" size={28} color="black" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={{ marginRight: 16 }}
+            onPress={() => navigation.navigate('Login', { setIsAdmin })}
+          >
+            <Ionicons name="log-in-outline" size={28} color="black" />
+          </TouchableOpacity>
+        ),
     });
-  }, [navigation]);
+  }, [navigation, isAdmin]);
 
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -93,11 +110,28 @@ export default function JapanScreen({ navigation }: JapanScreenProps) {
             {section.heading}
           </Text>
           {section.buttons.map(btn => (
-            <View key={btn.label} style={{ marginVertical: 4 }}>
-              <Button
-                title={btn.label}
-                onPress={() => navigation.navigate(btn.screen)}
-              />
+            <View
+              key={btn.label}
+              style={{
+                marginVertical: 4,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              {/* Only show logo for main event types */}
+              {logoMap[section.heading] && (
+                <Image
+                  source={logoMap[section.heading]}
+                  style={{ width: 32, height: 32, marginRight: 12 }}
+                  resizeMode="contain"
+                />
+              )}
+              <View style={{ flex: 1 }}>
+                <Button
+                  title={btn.label}
+                  onPress={() => navigation.navigate(btn.screen)}
+                />
+              </View>
             </View>
           ))}
         </View>

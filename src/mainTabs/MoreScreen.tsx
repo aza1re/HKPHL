@@ -1,6 +1,6 @@
 import React from 'react'
 import 'react-native-gesture-handler'
-import { View, Button, ScrollView, StyleSheet } from 'react-native'
+import { View, Button, ScrollView } from 'react-native'
 
 
 const screens = [
@@ -24,7 +24,7 @@ export default function MoreScreen({ navigation, route }: MoreScreenProps) {
         />
       </View>
       {screens.map(screen => (
-        <View style={styles.buttonWrapper} key={screen}>
+        <View className="my-2 w-4/5" key={screen}>
           {route.name !== screen && (
             <Button
               title={screen}
@@ -37,16 +37,4 @@ export default function MoreScreen({ navigation, route }: MoreScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
-  buttonWrapper: {
-    marginVertical: 8,
-    width: '80%',
-  },
-});
 
