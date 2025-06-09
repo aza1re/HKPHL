@@ -4,34 +4,47 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "postinstall": "patch-package"
+    "android": "expo start -c --android",
+    "ios": "expo start -c --ios",
+    "web": "expo start -c --web",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aza1re/HKPHL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aza1re/HKPHL/issues"
+  },
+  "homepage": "https://github.com/aza1re/HKPHL#readme",
+  "description": "",
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
+    "@react-native-picker/picker": "^2.11.0",
     "@react-navigation/bottom-tabs": "^7.3.14",
     "@react-navigation/native": "^7.1.10",
     "@react-navigation/native-stack": "^7.3.14",
-    "@tanstack/react-query": "^5.79.0",
-    "expo": "^53.0.9",
+    "@tanstack/react-query": "^5.80.6",
+    "expo": "^53.0.11",
     "expo-status-bar": "~2.2.3",
-    "firebase": "^11.8.1",
+    "firebase": "^11.9.0",
     "nativewind": "^4.1.23",
-    "react": "19.0.0",
+    "react": "^19.0.0",
     "react-dom": "19.0.0",
-    "react-native": "0.79.2",
+    "react-native": "^0.79.3",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-mmkv": "^3.2.0",
     "react-native-reanimated": "~3.17.4",
-    "react-native-safe-area-context": "^5.4.0",
+    "react-native-safe-area-context": "^5.4.1",
     "react-native-screens": "~4.10.0",
     "react-native-web": "^0.20.0",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
+    "@babel/core": "^7.27.4",
     "@playwright/test": "^1.52.0",
     "@types/react": "~19.0.10",
     "@types/react-native": "^0.72.8",
@@ -39,6 +52,5 @@
     "postinstall-postinstall": "^2.1.0",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.3"
-  },
-  "private": true
+  }
 }

@@ -1,28 +1,30 @@
 import React from 'react'
 import 'react-native-gesture-handler'
-import { View, Button, ScrollView } from 'react-native'
+import { View, Button, ScrollView, StyleSheet } from 'react-native'
 
 
 const screens = [
-  'Tournaments',
-  'Summer Camps',
-  'History',
-  'Favourites',
-  'League Schedule',
-  'Stats',
-  'Players',
+  'Notifications',
+  'Need Help',
+  'Contact Us',
 ] as const;
 
-type ChinaScreenProps = {
+type MoreScreenProps = {
   navigation: any;
   route: { name: typeof screens[number] };
 };
 
-export default function ChinaScreen({ navigation, route }: ChinaScreenProps) {
+export default function MoreScreen({ navigation, route }: MoreScreenProps) {
   return (
-    <ScrollView contentContainerClassName="p-6 items-center justify-center">
+    <ScrollView className="flex-1 items-center justify-center p-6">
+      <View className="my-2 w-4/5">
+        <Button
+          title="Login"
+          onPress={() => navigation.navigate('Login')}
+        />
+      </View>
       {screens.map(screen => (
-        <View className="my-2 w-4/5" key={screen}>
+        <View style={styles.buttonWrapper} key={screen}>
           {route.name !== screen && (
             <Button
               title={screen}
@@ -34,3 +36,17 @@ export default function ChinaScreen({ navigation, route }: ChinaScreenProps) {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  buttonWrapper: {
+    marginVertical: 8,
+    width: '80%',
+  },
+});
+

@@ -5,13 +5,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import ChinaScreen from '../mainTabs/ChinaScreen'
+import AddEvent from '../modules/AddEvent'
 import KoreaScreen from '../mainTabs/KoreaScreen'
 import JapanScreen from '../mainTabs/JapanScreen'
 import MoreScreen from '../mainTabs/MoreScreen'
+import LoginScreen from '../modules/LoginScreen'
+
 
 // 1) Define ParamLists
 type ChinaStackParamList = {
   China: undefined
+  AddEvent: undefined
 }
 type KoreaStackParamList = {
   Korea: undefined
@@ -21,10 +25,7 @@ type JapanStackParamList = {
 }
 type MoreStackParamList = {
   More: undefined
-  'Team Registration': undefined
-  Notifications: undefined
-  'Need Help': undefined
-  'Contact Us': undefined
+  Login: undefined
 }
 type RootTabParamList = {
   China: undefined
@@ -46,6 +47,7 @@ function ChinaStack() {
   return (
     <ChinaStackNav.Navigator id="ChinaStack">
       <ChinaStackNav.Screen name="China" component={ChinaScreen} />
+      <ChinaStackNav.Screen name="AddEvent" component={AddEvent} options={{ title: 'Add Event' }} />
     </ChinaStackNav.Navigator>
   )
 }
@@ -70,6 +72,7 @@ function MoreStack() {
   return (
     <MoreStackNav.Navigator id="MoreStack">
       <MoreStackNav.Screen name="More" component={MoreScreen} />
+      <MoreStackNav.Screen name="Login" component={LoginScreen} />
     </MoreStackNav.Navigator>
   )
 }
