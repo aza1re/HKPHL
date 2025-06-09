@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; // <-- named import
+import { Picker } from '@react-native-picker/picker';
 
-const eventTypes = ['Tournaments', 'Leagues', 'Showcases', 'Camps'];
+const eventTypes = ['Tournaments', 'Leagues', 'Showcases'];
 
 export default function AddEvent({ navigation, route }: any) {
   const [type, setType] = useState<string>(eventTypes[0]);

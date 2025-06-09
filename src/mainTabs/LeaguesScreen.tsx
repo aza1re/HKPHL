@@ -1,0 +1,71 @@
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useAdmin } from '../context/AdminContext';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+const leagues = [
+  {
+    name: 'Asia Cup',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', // Example logo URL
+  },
+  {
+    name: 'Winter Classic',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
+  },
+  // Add more Leagues as needed
+];
+// For LeaguesScreen
+type LeaguesStackParamList = {
+  Leagues: undefined;
+  AddEvent: undefined;
+};
+
+type LeaguesScreenNavigationProp = NativeStackNavigationProp<
+  LeaguesStackParamList,
+  'Leagues'
+>;
+
+export default function LeaguesScreen() {
+  const navigation = useNavigation<LeaguesScreenNavigationProp>();
+  const { isAdmin } = useAdmin();
+
+  return (
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {isAdmin && (
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#007bff',
+            padding: 12,
+            borderRadius: 8,
+            marginBottom: 16,
+            alignItems: 'center',
+          }}
+          onPress={() => navigation.navigate('AddEvent')}
+        >
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
+        </TouchableOpacity>
+      )}
+      {leagues.map((league) => (
+        <View
+          key={league.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: league.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
+        </View>
+      ))}
+    </ScrollView>
+  );
+}

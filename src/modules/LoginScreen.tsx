@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../firebase/firebase'; // <-- Make sure db is exported from your firebase config
+import { auth, db } from '../firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { useAdmin } from '../context/AdminContext';
 
-export default function LoginScreen({ navigation, route }) {
+export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
-  // Pass setIsAdmin from route.params (or use context if you prefer)
-  const setIsAdmin = route?.params?.setIsAdmin;
+  const { setIsAdmin } = useAdmin();
 
   const handleLogin = async () => {
     try {
@@ -19,10 +18,10 @@ export default function LoginScreen({ navigation, route }) {
       // Check Firestore for admin status
       const adminDoc = await getDoc(doc(db, "admins", user.uid));
       if (adminDoc.exists()) {
-        setIsAdmin && setIsAdmin(true);
+        setIsAdmin(true);
         Alert.alert('Login successful! Admin access granted.');
       } else {
-        setIsAdmin && setIsAdmin(false);
+        setIsAdmin(false);
         Alert.alert('Login successful! But you are not an admin.');
       }
       navigation.goBack();
