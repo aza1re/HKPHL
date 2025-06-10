@@ -3,6 +3,7 @@ import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import TournamentsScreen from '../mainTabs/TournamentsScreen'
 import ShowcasesScreen from '../mainTabs/ShowcasesScreen'
@@ -33,7 +34,8 @@ type MoreStackParamList = {
   More: undefined
   Login: undefined
 }
-type RootTabParamList = {
+export type RootTabParamList = {
+  Login: undefined
   Tournaments: undefined
   Showcases: undefined
   Leagues: undefined
@@ -49,6 +51,10 @@ const FavoritesStackNav = createNativeStackNavigator<FavoritesStackParamList>()
 const MoreStackNav = createNativeStackNavigator<MoreStackParamList>()
 const Tab = createBottomTabNavigator<RootTabParamList>()
 
+type MoreScreenProps = {
+  navigation: NativeStackNavigationProp<MoreStackParamList, 'More'>;
+};
+
 
 function TournamentsStack() {
   return (
@@ -63,6 +69,7 @@ function ShowcasesStack() {
   return (
     <ShowcasesStackNav.Navigator id={"ShowcasesStack" as any}>
       <ShowcasesStackNav.Screen name="Showcases" component={ShowcasesScreen} />
+      <ShowcasesStackNav.Screen name="AddEvent" component={AddEvent} options={{ title: 'Add Event' }} />
     </ShowcasesStackNav.Navigator>
   )
 }
@@ -71,6 +78,7 @@ function LeaguesStack() {
   return (
     <LeaguesStackNav.Navigator id={"LeaguesStack" as any}>
       <LeaguesStackNav.Screen name="Leagues" component={LeaguesScreen} />
+      <LeaguesStackNav.Screen name="AddEvent" component={AddEvent} options={{ title: 'Add Event' }} />
     </LeaguesStackNav.Navigator>
   )
 }

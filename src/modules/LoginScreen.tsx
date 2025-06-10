@@ -3,9 +3,15 @@ import { View, TextInput, Button, Text, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { useAdmin } from '../context/AdminContext';
+import { useAdmin } from '../context/AdminContext'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootTabParamList } from '../navigation/AppNavigator';
 
-export default function LoginScreen({ navigation }) {
+type LoginScreenProps = {
+  navigation: NativeStackNavigationProp<RootTabParamList, 'Login'>;
+};
+
+export default function LoginScreen({ navigation } : LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,7 +28,7 @@ export default function LoginScreen({ navigation }) {
         Alert.alert('Login successful! Admin access granted.');
       } else {
         setIsAdmin(false);
-        Alert.alert('Login successful! But you are not an admin.');
+        Alert.alert('Login successful!');
       }
       navigation.goBack();
     } catch (err) {

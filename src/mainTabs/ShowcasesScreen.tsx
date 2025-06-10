@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAdmin } from '../context/AdminContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-const showcases = [
+const initialShowcases = [
   { name: 'Elite Showcase', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
   { name: 'Future Stars', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
 ];
 
-// For ShowcasesScreen
 type ShowcasesStackParamList = {
   Showcases: undefined;
-  AddEvent: undefined;
+  AddEvent: { onAdd: ({ name }: { name: string }) => void };
+  Details: { name: string; logo: string };
 };
 
 type ShowcasesScreenNavigationProp = NativeStackNavigationProp<
@@ -23,6 +23,14 @@ type ShowcasesScreenNavigationProp = NativeStackNavigationProp<
 export default function ShowcasesScreen() {
   const navigation = useNavigation<ShowcasesScreenNavigationProp>();
   const { isAdmin } = useAdmin();
+  const [showcases, setShowcases] = useState(initialShowcases);
+
+  const handleAddEvent = ({ name }: { name: string }) => {
+    setShowcases(prev => [
+      ...prev,
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' }, // Default logo
+    ]);
+  };
 
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -35,13 +43,13 @@ export default function ShowcasesScreen() {
             marginBottom: 16,
             alignItems: 'center',
           }}
-          onPress={() => navigation.navigate('AddEvent')}
+          onPress={() => navigation.navigate('AddEvent', { onAdd: handleAddEvent })}
         >
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
         </TouchableOpacity>
       )}
-      {showcases.map((showcase) => (
-        <View
+      {showcases.map(showcase => (
+        <TouchableOpacity
           key={showcase.name}
           style={{
             flexDirection: 'row',
@@ -51,6 +59,7 @@ export default function ShowcasesScreen() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => navigation.navigate('Details', { name: showcase.name, logo: showcase.logo })}
         >
           <Image
             source={{ uri: showcase.logo }}
@@ -58,7 +67,7 @@ export default function ShowcasesScreen() {
             resizeMode="contain"
           />
           <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
-        </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );

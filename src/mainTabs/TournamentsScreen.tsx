@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAdmin } from '../context/AdminContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-const tournaments = [
+const initialTournaments = [
   {
     name: 'Asia Cup',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', // Example logo URL
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
   },
   {
     name: 'Winter Classic',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
   },
-  // Add more tournaments as needed
 ];
 
-// For TournamentsScreen
 type TournamentsStackParamList = {
   Tournaments: undefined;
-  AddEvent: undefined;
+  AddEvent: { onAdd: ({ name }: { name: string }) => void };
+  Details: { name: string; logo: string };
 };
 
 type TournamentsScreenNavigationProp = NativeStackNavigationProp<
@@ -30,6 +29,14 @@ type TournamentsScreenNavigationProp = NativeStackNavigationProp<
 export default function TournamentsScreen() {
   const navigation = useNavigation<TournamentsScreenNavigationProp>();
   const { isAdmin } = useAdmin();
+  const [tournaments, setTournaments] = useState(initialTournaments);
+
+  const handleAddEvent = ({ name }: { name: string }) => {
+    setTournaments(prev => [
+      ...prev,
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' }, // Default logo
+    ]);
+  };
 
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -42,13 +49,13 @@ export default function TournamentsScreen() {
             marginBottom: 16,
             alignItems: 'center',
           }}
-          onPress={() => navigation.navigate('AddEvent')}
+          onPress={() => navigation.navigate('AddEvent', { onAdd: handleAddEvent })}
         >
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
         </TouchableOpacity>
       )}
-      {tournaments.map((tournament) => (
-        <View
+      {tournaments.map(tournament => (
+        <TouchableOpacity
           key={tournament.name}
           style={{
             flexDirection: 'row',
@@ -58,6 +65,7 @@ export default function TournamentsScreen() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => navigation.navigate('Details', { name: tournament.name, logo: tournament.logo })}
         >
           <Image
             source={{ uri: tournament.logo }}
@@ -65,7 +73,7 @@ export default function TournamentsScreen() {
             resizeMode="contain"
           />
           <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
-        </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );

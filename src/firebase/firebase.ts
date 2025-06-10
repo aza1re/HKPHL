@@ -11,15 +11,16 @@ import {
 } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
-// TODO replace with your Firebase project config
 const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "your-app.firebaseapp.com",
-  projectId: "your-app",
-  storageBucket: "your-app.appspot.com",
-  messagingSenderId: "...",
-  appId: "...",
-}
+  apiKey: "AIzaSyAXYi7MCm-aMBeh3bEjs0eJ5eHcGjf9-bw",
+  authDomain: "achieve-cb085.firebaseapp.com",
+  databaseURL: "https://achieve-cb085-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "achieve-cb085",
+  storageBucket: "achieve-cb085.firebasestorage.app",
+  messagingSenderId: "260668035138",
+  appId: "1:260668035138:web:ba67a28ffd83d01b279ddb",
+  measurementId: "G-JWFXTNTCGZ"
+};
 
 const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)

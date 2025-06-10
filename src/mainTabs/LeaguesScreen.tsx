@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAdmin } from '../context/AdminContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-const leagues = [
+const initialLeagues = [
   {
     name: 'Asia Cup',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', // Example logo URL
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
   },
   {
     name: 'Winter Classic',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
   },
-  // Add more Leagues as needed
 ];
-// For LeaguesScreen
+
 type LeaguesStackParamList = {
   Leagues: undefined;
-  AddEvent: undefined;
+  AddEvent: { onAdd: ({ name }: { name: string }) => void };
+  Details: { name: string; logo: string };
 };
 
 type LeaguesScreenNavigationProp = NativeStackNavigationProp<
@@ -29,6 +29,14 @@ type LeaguesScreenNavigationProp = NativeStackNavigationProp<
 export default function LeaguesScreen() {
   const navigation = useNavigation<LeaguesScreenNavigationProp>();
   const { isAdmin } = useAdmin();
+  const [leagues, setLeagues] = useState(initialLeagues);
+
+  const handleAddEvent = ({ name }: { name: string }) => {
+    setLeagues(prev => [
+      ...prev,
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' }, // Default logo
+    ]);
+  };
 
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
@@ -41,13 +49,13 @@ export default function LeaguesScreen() {
             marginBottom: 16,
             alignItems: 'center',
           }}
-          onPress={() => navigation.navigate('AddEvent')}
+          onPress={() => navigation.navigate('AddEvent', { onAdd: handleAddEvent })}
         >
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
         </TouchableOpacity>
       )}
-      {leagues.map((league) => (
-        <View
+      {leagues.map(league => (
+        <TouchableOpacity
           key={league.name}
           style={{
             flexDirection: 'row',
@@ -57,6 +65,7 @@ export default function LeaguesScreen() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => navigation.navigate('Details', { name: league.name, logo: league.logo })}
         >
           <Image
             source={{ uri: league.logo }}
@@ -64,7 +73,7 @@ export default function LeaguesScreen() {
             resizeMode="contain"
           />
           <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
-        </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );
