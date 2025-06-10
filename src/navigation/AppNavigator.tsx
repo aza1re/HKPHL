@@ -8,7 +8,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import TournamentsScreen from '../mainTabs/TournamentsScreen'
 import ShowcasesScreen from '../mainTabs/ShowcasesScreen'
 import LeaguesScreen from '../mainTabs/LeaguesScreen'
-import FavoritesScreen from '../mainTabs/FavoritesScreen' // <-- create this if it doesn't exist
+import FavoritesScreen from '../mainTabs/FavoritesScreen'
 import MoreScreen from '../mainTabs/MoreScreen'
 import AddEvent from '../modules/AddEvent'
 import LoginScreen from '../modules/LoginScreen'

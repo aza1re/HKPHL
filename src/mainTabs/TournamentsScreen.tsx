@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { useAdmin } from '../context/AdminContext';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-const initialTournaments = [
-  {
-    name: 'Asia Cup',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
-  },
-  {
-    name: 'Winter Classic',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
-  },
-];
 
 type TournamentsStackParamList = {
   Tournaments: undefined;
@@ -26,15 +16,27 @@ type TournamentsScreenNavigationProp = NativeStackNavigationProp<
   'Tournaments'
 >;
 
-export default function TournamentsScreen() {
+type Tournament = {
+  name: string;
+  logo: string;
+};
+
+const initialTournaments: Tournament[] = [
+  { name: 'Asia Cup', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+  { name: 'Winter Classic', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+];
+
+const Tab = createMaterialTopTabNavigator();
+
+function AllTournaments() {
   const navigation = useNavigation<TournamentsScreenNavigationProp>();
   const { isAdmin } = useAdmin();
-  const [tournaments, setTournaments] = useState(initialTournaments);
+  const [tournaments, setTournaments] = React.useState<Tournament[]>(initialTournaments);
 
   const handleAddEvent = ({ name }: { name: string }) => {
     setTournaments(prev => [
       ...prev,
-      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' }, // Default logo
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
     ]);
   };
 
@@ -76,5 +78,43 @@ export default function TournamentsScreen() {
         </TouchableOpacity>
       ))}
     </ScrollView>
+  );
+}
+
+function ChinaTournaments() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    </View>
+  );
+}
+
+function KoreaTournaments() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    </View>
+  );
+}
+
+function JapanTournaments() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    </View>
+  );
+}
+
+export default function TournamentsScreen() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarIndicatorStyle: { backgroundColor: '#007bff' },
+        tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' },
+        tabBarStyle: { backgroundColor: '#f3f3f3' },
+      }}
+    >
+      <Tab.Screen name="All" component={AllTournaments} />
+      <Tab.Screen name="China" component={ChinaTournaments} />
+      <Tab.Screen name="Korea" component={KoreaTournaments} />
+      <Tab.Screen name="Japan" component={JapanTournaments} />
+    </Tab.Navigator>
   );
 }

@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { useAdmin } from '../context/AdminContext';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-const initialLeagues = [
-  {
-    name: 'Asia Cup',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
-  },
-  {
-    name: 'Winter Classic',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
-  },
-];
 
 type LeaguesStackParamList = {
   Leagues: undefined;
@@ -26,15 +16,27 @@ type LeaguesScreenNavigationProp = NativeStackNavigationProp<
   'Leagues'
 >;
 
-export default function LeaguesScreen() {
+type Tournament = {
+  name: string;
+  logo: string;
+};
+
+const initialLeagues = [
+  { name: 'Elite Showcase', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+  { name: 'Future Stars', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+];
+
+const Tab = createMaterialTopTabNavigator();
+
+function AllLeagues() {
   const navigation = useNavigation<LeaguesScreenNavigationProp>();
   const { isAdmin } = useAdmin();
-  const [leagues, setLeagues] = useState(initialLeagues);
+  const [Leagues, setLeagues] = React.useState(initialLeagues);
 
   const handleAddEvent = ({ name }: { name: string }) => {
     setLeagues(prev => [
       ...prev,
-      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' }, // Default logo
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
     ]);
   };
 
@@ -54,9 +56,9 @@ export default function LeaguesScreen() {
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
         </TouchableOpacity>
       )}
-      {leagues.map(league => (
+      {Leagues.map(showcase => (
         <TouchableOpacity
-          key={league.name}
+          key={showcase.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -65,16 +67,57 @@ export default function LeaguesScreen() {
             padding: 12,
             marginBottom: 16,
           }}
-          onPress={() => navigation.navigate('Details', { name: league.name, logo: league.logo })}
+          onPress={() => navigation.navigate('Details', { name: showcase.name, logo: showcase.logo })}
         >
           <Image
-            source={{ uri: league.logo }}
+            source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
+  );
+}
+
+function ChinaLeagues() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>China Leagues</Text>
+    </View>
+  );
+}
+
+function KoreaLeagues() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Korea Leagues</Text>
+    </View>
+  );
+}
+
+function JapanLeagues() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Japan Leagues</Text>
+    </View>
+  );
+}
+
+export default function LeaguesScreen() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarIndicatorStyle: { backgroundColor: '#007bff' },
+        tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' },
+        tabBarStyle: { backgroundColor: '#f3f3f3' },
+      }}
+    >
+      <Tab.Screen name="All" component={AllLeagues} />
+      <Tab.Screen name="China" component={ChinaLeagues} />
+      <Tab.Screen name="Korea" component={KoreaLeagues} />
+      <Tab.Screen name="Japan" component={JapanLeagues} />
+    </Tab.Navigator>
   );
 }
