@@ -19,11 +19,13 @@ type TournamentsScreenNavigationProp = NativeStackNavigationProp<
 type Tournament = {
   name: string;
   logo: string;
+  tag: 'China' | 'Korea' | 'Japan';
 };
 
 const initialTournaments: Tournament[] = [
-  { name: 'Asia Cup', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
-  { name: 'Winter Classic', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+  { name: 'Asia Cup', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' },
+  { name: 'Winter Classic', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Korea' },
+  { name: 'Champions Trophy', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Japan' },
 ];
 
 const Tab = createMaterialTopTabNavigator();
@@ -36,7 +38,7 @@ function AllTournaments() {
   const handleAddEvent = ({ name }: { name: string }) => {
     setTournaments(prev => [
       ...prev,
-      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' }, // Default tag
     ]);
   };
 
@@ -74,7 +76,10 @@ function AllTournaments() {
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>Tag: {tournament.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -82,23 +87,86 @@ function AllTournaments() {
 }
 
 function ChinaTournaments() {
+  const tournaments = initialTournaments.filter(t => t.tag === 'China');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {tournaments.map(tournament => (
+        <TouchableOpacity
+          key={tournament.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: tournament.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
 function KoreaTournaments() {
+  const tournaments = initialTournaments.filter(t => t.tag === 'Korea');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {tournaments.map(tournament => (
+        <TouchableOpacity
+          key={tournament.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: tournament.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
 function JapanTournaments() {
+  const tournaments = initialTournaments.filter(t => t.tag === 'Japan');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {tournaments.map(tournament => (
+        <TouchableOpacity
+          key={tournament.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: tournament.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
