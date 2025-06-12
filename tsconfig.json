@@ -12,6 +12,7 @@
     "App.tsx",
     "global.d.ts",
     "navigation-shims.d.ts",
+    "firebase-shims.d.ts",
     "src/**/*"
   ]
 }

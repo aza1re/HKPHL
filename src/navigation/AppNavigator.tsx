@@ -3,18 +3,16 @@ import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import TournamentsScreen from '../maintabs/TournamentsScreen'
-import ShowcasesScreen from '../maintabs/ShowcasesScreen'
-import LeaguesScreen from '../maintabs/LeaguesScreen'
-import FavoritesScreen from '../maintabs/FavoritesScreen'
-import MoreScreen from '../maintabs/MoreScreen'
-import AddEvent from '../modules/AddEvent'
-import LoginScreen from '../modules/LoginScreen'
+import ShowcasesScreen   from '../maintabs/ShowcasesScreen'
+import LeaguesScreen     from '../maintabs/LeaguesScreen'
+import FavoritesScreen   from '../maintabs/FavoritesScreen'
+import MoreScreen        from '../maintabs/MoreScreen'
+import AddEvent          from '../modules/AddEvent'
+import LoginScreen       from '../modules/LoginScreen'
 
-
-// 1) Define ParamLists
+// 1) Define Param Lists
 type TournamentsStackParamList = {
   Tournaments: undefined
   AddEvent: undefined
@@ -35,7 +33,6 @@ type MoreStackParamList = {
   Login: undefined
 }
 export type RootTabParamList = {
-  Login: undefined
   Tournaments: undefined
   Showcases: undefined
   Leagues: undefined
@@ -44,21 +41,18 @@ export type RootTabParamList = {
 }
 
 // 2) Create navigators
+const RootStack           = createNativeStackNavigator()
 const TournamentsStackNav = createNativeStackNavigator<TournamentsStackParamList>()
-const ShowcasesStackNav = createNativeStackNavigator<ShowcasesStackParamList>()
-const LeaguesStackNav = createNativeStackNavigator<LeaguesStackParamList>()
-const FavoritesStackNav = createNativeStackNavigator<FavoritesStackParamList>()
-const MoreStackNav = createNativeStackNavigator<MoreStackParamList>()
-const Tab = createBottomTabNavigator<RootTabParamList>()
+const ShowcasesStackNav   = createNativeStackNavigator<ShowcasesStackParamList>()
+const LeaguesStackNav     = createNativeStackNavigator<LeaguesStackParamList>()
+const FavoritesStackNav   = createNativeStackNavigator<FavoritesStackParamList>()
+const MoreStackNav        = createNativeStackNavigator<MoreStackParamList>()
+const Tab                  = createBottomTabNavigator<RootTabParamList>()
 
-type MoreScreenProps = {
-  navigation: NativeStackNavigationProp<MoreStackParamList, 'More'>;
-};
-
-
+// 3) Stacks for each tab (no id props)
 function TournamentsStack() {
   return (
-    <TournamentsStackNav.Navigator id={"TournamentsStack" as any}>
+    <TournamentsStackNav.Navigator>
       <TournamentsStackNav.Screen name="Tournaments" component={TournamentsScreen} />
       <TournamentsStackNav.Screen name="AddEvent" component={AddEvent} options={{ title: 'Add Event' }} />
     </TournamentsStackNav.Navigator>
@@ -67,7 +61,7 @@ function TournamentsStack() {
 
 function ShowcasesStack() {
   return (
-    <ShowcasesStackNav.Navigator id={"ShowcasesStack" as any}>
+    <ShowcasesStackNav.Navigator>
       <ShowcasesStackNav.Screen name="Showcases" component={ShowcasesScreen} />
       <ShowcasesStackNav.Screen name="AddEvent" component={AddEvent} options={{ title: 'Add Event' }} />
     </ShowcasesStackNav.Navigator>
@@ -76,7 +70,7 @@ function ShowcasesStack() {
 
 function LeaguesStack() {
   return (
-    <LeaguesStackNav.Navigator id={"LeaguesStack" as any}>
+    <LeaguesStackNav.Navigator>
       <LeaguesStackNav.Screen name="Leagues" component={LeaguesScreen} />
       <LeaguesStackNav.Screen name="AddEvent" component={AddEvent} options={{ title: 'Add Event' }} />
     </LeaguesStackNav.Navigator>
@@ -85,7 +79,7 @@ function LeaguesStack() {
 
 function FavoritesStack() {
   return (
-    <FavoritesStackNav.Navigator id={"FavoritesStack" as any}>
+    <FavoritesStackNav.Navigator>
       <FavoritesStackNav.Screen name="Favorites" component={FavoritesScreen} />
     </FavoritesStackNav.Navigator>
   )
@@ -93,23 +87,34 @@ function FavoritesStack() {
 
 function MoreStack() {
   return (
-    <MoreStackNav.Navigator id={"MoreStack" as any}>
+    <MoreStackNav.Navigator>
       <MoreStackNav.Screen name="More" component={MoreScreen} />
       <MoreStackNav.Screen name="Login" component={LoginScreen} />
     </MoreStackNav.Navigator>
   )
 }
 
+// 4) Bottom Tabs for main app
+function MainTabNavigator() {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Tournaments" component={TournamentsStack} />
+      <Tab.Screen name="Showcases"   component={ShowcasesStack} />
+      <Tab.Screen name="Leagues"     component={LeaguesStack} />
+      <Tab.Screen name="Favorites"   component={FavoritesStack} />
+      <Tab.Screen name="More"        component={MoreStack} />
+    </Tab.Navigator>
+  )
+}
+
+// 5) Root Stack including Login and MainTabs
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Tab.Navigator id={"AppNavigator" as any} screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Tournaments" component={TournamentsStack} />
-        <Tab.Screen name="Showcases" component={ShowcasesStack} />
-        <Tab.Screen name="Leagues" component={LeaguesStack} />
-        <Tab.Screen name="Favorites" component={FavoritesStack} />
-        <Tab.Screen name="More" component={MoreStack} />
-      </Tab.Navigator>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="Login" component={LoginScreen} />
+        <RootStack.Screen name="Main"  component={MainTabNavigator} />
+      </RootStack.Navigator>
     </NavigationContainer>
   )
 }

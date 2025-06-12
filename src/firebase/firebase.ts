@@ -1,15 +1,12 @@
 import { initializeApp } from 'firebase/app'
+import { getFirestore, collection, addDoc, getDocs, query, where, onSnapshot, orderBy } from 'firebase/firestore'
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  onSnapshot,
-  orderBy,
-} from 'firebase/firestore'
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+  initializeAuth,
+  getReactNativePersistence,
+  signInWithEmailAndPassword,
+  signOut
+} from 'firebase/auth'
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAXYi7MCm-aMBeh3bEjs0eJ5eHcGjf9-bw",
@@ -24,7 +21,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
-export const auth = getAuth(app)
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+})
 
 export const tournamentsCol = collection(db, 'tournaments')
 export const gamesCol       = collection(db, 'games')
@@ -32,5 +31,4 @@ export const standingsCol   = collection(db, 'standings')
 export const playersCol     = collection(db, 'players')
 export const teamsCol       = collection(db, 'teams')
 
-// add addDoc to the list of exports:
-export { query, where, onSnapshot, orderBy, getDocs, addDoc }
+export { query, where, onSnapshot, orderBy, getDocs, addDoc, signInWithEmailAndPassword, signOut }
