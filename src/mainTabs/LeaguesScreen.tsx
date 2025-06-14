@@ -16,14 +16,16 @@ type LeaguesScreenNavigationProp = NativeStackNavigationProp<
   'Leagues'
 >;
 
-type Tournament = {
+type League = {
   name: string;
   logo: string;
+  tag: 'China' | 'Korea' | 'Japan';
 };
 
-const initialLeagues = [
-  { name: 'Elite Showcase', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
-  { name: 'Future Stars', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+const initialLeagues: League[] = [
+  { name: 'Elite League', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' },
+  { name: 'Future League', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Korea' },
+  { name: 'Samurai League', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Japan' },
 ];
 
 const Tab = createMaterialTopTabNavigator();
@@ -31,12 +33,12 @@ const Tab = createMaterialTopTabNavigator();
 function AllLeagues() {
   const navigation = useNavigation<LeaguesScreenNavigationProp>();
   const { isAdmin } = useAdmin();
-  const [Leagues, setLeagues] = React.useState(initialLeagues);
+  const [leagues, setLeagues] = React.useState(initialLeagues);
 
   const handleAddEvent = ({ name }: { name: string }) => {
     setLeagues(prev => [
       ...prev,
-      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' }, // Default tag
     ]);
   };
 
@@ -56,7 +58,7 @@ function AllLeagues() {
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
         </TouchableOpacity>
       )}
-      {Leagues.map(showcase => (
+      {leagues.map(showcase => (
         <TouchableOpacity
           key={showcase.name}
           style={{
@@ -82,26 +84,86 @@ function AllLeagues() {
 }
 
 function ChinaLeagues() {
+  const leagues = initialLeagues.filter(l => l.tag === 'China');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>China Leagues</Text>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {leagues.map(league => (
+        <TouchableOpacity
+          key={league.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: league.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
 function KoreaLeagues() {
+  const leagues = initialLeagues.filter(l => l.tag === 'Korea');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Korea Leagues</Text>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {leagues.map(league => (
+        <TouchableOpacity
+          key={league.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: league.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
 function JapanLeagues() {
+  const leagues = initialLeagues.filter(l => l.tag === 'Japan');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Japan Leagues</Text>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {leagues.map(league => (
+        <TouchableOpacity
+          key={league.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: league.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 

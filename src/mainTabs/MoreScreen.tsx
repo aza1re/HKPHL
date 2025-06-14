@@ -1,7 +1,6 @@
-import React from 'react'
-import 'react-native-gesture-handler'
-import { View, Button, ScrollView } from 'react-native'
-
+import React from 'react';
+import { View, Text } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const screens = [
   'Notifications',
@@ -9,31 +8,16 @@ const screens = [
   'Contact Us',
 ] as const;
 
-type MoreScreenProps = {
-  navigation: any;
-  route: { name: typeof screens[number] };
-};
+export default function MoreScreen() {
+  const navigation = useNavigation();
+  const route = useRoute();
 
-export default function MoreScreen({ navigation, route }: MoreScreenProps) {
   return (
-    <ScrollView className="flex-1 items-center justify-center p-6">
-      <View className="my-2 w-4/5">
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate('Login')}
-        />
-      </View>
-      {screens.map(screen => (
-        <View className="my-2 w-4/5" key={screen}>
-          {route.name !== screen && (
-            <Button
-              title={screen}
-              onPress={() => navigation.navigate(screen)}
-            />
-          )}
-        </View>
-      ))}
-    </ScrollView>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+        {route.name}
+      </Text>
+    </View>
   );
 }
 

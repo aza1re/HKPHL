@@ -33,11 +33,13 @@ type MoreStackParamList = {
   Login: undefined
 }
 export type RootTabParamList = {
+  Home: undefined;
   Tournaments: undefined
   Showcases: undefined
   Leagues: undefined
   Favorites: undefined
   More: undefined
+  Login: undefined; // <-- Add this line
 }
 
 // 2) Create navigators

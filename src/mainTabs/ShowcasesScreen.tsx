@@ -16,14 +16,16 @@ type ShowcasesScreenNavigationProp = NativeStackNavigationProp<
   'Showcases'
 >;
 
-type Tournament = {
+type Showcase = {
   name: string;
   logo: string;
+  tag: 'China' | 'Korea' | 'Japan';
 };
 
-const initialShowcases = [
-  { name: 'Elite Showcase', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
-  { name: 'Future Stars', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+const initialShowcases: Showcase[] = [
+  { name: 'Elite Showcase', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' },
+  { name: 'Future Stars', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Korea' },
+  { name: 'Rising Sun', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Japan' },
 ];
 
 const Tab = createMaterialTopTabNavigator();
@@ -36,7 +38,7 @@ function AllShowcases() {
   const handleAddEvent = ({ name }: { name: string }) => {
     setShowcases(prev => [
       ...prev,
-      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' },
+      { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' }, // Default tag
     ]);
   };
 
@@ -82,26 +84,86 @@ function AllShowcases() {
 }
 
 function ChinaShowcases() {
+  const showcases = initialShowcases.filter(s => s.tag === 'China');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>China Showcases</Text>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {showcases.map(showcase => (
+        <TouchableOpacity
+          key={showcase.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: showcase.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
 function KoreaShowcases() {
+  const showcases = initialShowcases.filter(s => s.tag === 'Korea');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Korea Showcases</Text>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {showcases.map(showcase => (
+        <TouchableOpacity
+          key={showcase.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: showcase.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
 function JapanShowcases() {
+  const showcases = initialShowcases.filter(s => s.tag === 'Japan');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Japan Showcases</Text>
-    </View>
+    <ScrollView contentContainerStyle={{ padding: 24 }}>
+      {showcases.map(showcase => (
+        <TouchableOpacity
+          key={showcase.name}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#f3f3f3',
+            borderRadius: 8,
+            padding: 12,
+            marginBottom: 16,
+          }}
+        >
+          <Image
+            source={{ uri: showcase.logo }}
+            style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
+            resizeMode="contain"
+          />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
