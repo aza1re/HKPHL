@@ -15,7 +15,6 @@ export default {
     },
     ios: {
       supportsTablet: true,
-      jsEngine: "jsc"
     },
     android: {
       adaptiveIcon: {
@@ -27,6 +26,9 @@ export default {
     },
     web: {
       favicon: "./assets/favicon.png"
-    }
+    },
+    plugins: [
+      "expo-router"
+    ]
   }
 };

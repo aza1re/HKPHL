@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { useAdmin } from '../context/AdminContext';
+import { useAdmin } from '../src/context/AdminContext';
 
 type ShowcasesStackParamList = {
   Showcases: undefined;
