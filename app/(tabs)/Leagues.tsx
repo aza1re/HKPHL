@@ -3,40 +3,40 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { useAdmin } from '../src/context/AdminContext';
+import { useAdmin } from '../../src/context/AdminContext';
 
-type ShowcasesStackParamList = {
-  Showcases: undefined;
+type LeaguesStackParamList = {
+  Leagues: undefined;
   AddEvent: { onAdd: ({ name }: { name: string }) => void };
   Details: { name: string; logo: string };
 };
 
-type ShowcasesScreenNavigationProp = NativeStackNavigationProp<
-  ShowcasesStackParamList,
-  'Showcases'
+type LeaguesScreenNavigationProp = NativeStackNavigationProp<
+  LeaguesStackParamList,
+  'Leagues'
 >;
 
-type Showcase = {
+type League = {
   name: string;
   logo: string;
   tag: 'China' | 'Korea' | 'Japan';
 };
 
-const initialShowcases: Showcase[] = [
-  { name: 'Elite Showcase', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' },
-  { name: 'Future Stars', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Korea' },
-  { name: 'Rising Sun', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Japan' },
+const initialLeagues: League[] = [
+  { name: 'Elite League', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' },
+  { name: 'Future League', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Korea' },
+  { name: 'Samurai League', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Japan' },
 ];
 
 const Tab = createMaterialTopTabNavigator();
 
-function AllShowcases() {
-  const navigation = useNavigation<ShowcasesScreenNavigationProp>();
+function AllLeagues() {
+  const navigation = useNavigation<LeaguesScreenNavigationProp>();
   const { isAdmin } = useAdmin();
-  const [showcases, setShowcases] = React.useState(initialShowcases);
+  const [leagues, setLeagues] = React.useState(initialLeagues);
 
   const handleAddEvent = ({ name }: { name: string }) => {
-    setShowcases(prev => [
+    setLeagues(prev => [
       ...prev,
       { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' }, // Default tag
     ]);
@@ -58,7 +58,7 @@ function AllShowcases() {
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
         </TouchableOpacity>
       )}
-      {showcases.map(showcase => (
+      {leagues.map(showcase => (
         <TouchableOpacity
           key={showcase.name}
           style={{
@@ -83,13 +83,13 @@ function AllShowcases() {
   );
 }
 
-function ChinaShowcases() {
-  const showcases = initialShowcases.filter(s => s.tag === 'China');
+function ChinaLeagues() {
+  const leagues = initialLeagues.filter(l => l.tag === 'China');
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
-      {showcases.map(showcase => (
+      {leagues.map(league => (
         <TouchableOpacity
-          key={showcase.name}
+          key={league.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -100,24 +100,24 @@ function ChinaShowcases() {
           }}
         >
           <Image
-            source={{ uri: showcase.logo }}
+            source={{ uri: league.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 }
 
-function KoreaShowcases() {
-  const showcases = initialShowcases.filter(s => s.tag === 'Korea');
+function KoreaLeagues() {
+  const leagues = initialLeagues.filter(l => l.tag === 'Korea');
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
-      {showcases.map(showcase => (
+      {leagues.map(league => (
         <TouchableOpacity
-          key={showcase.name}
+          key={league.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -128,24 +128,24 @@ function KoreaShowcases() {
           }}
         >
           <Image
-            source={{ uri: showcase.logo }}
+            source={{ uri: league.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 }
 
-function JapanShowcases() {
-  const showcases = initialShowcases.filter(s => s.tag === 'Japan');
+function JapanLeagues() {
+  const leagues = initialLeagues.filter(l => l.tag === 'Japan');
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
-      {showcases.map(showcase => (
+      {leagues.map(league => (
         <TouchableOpacity
-          key={showcase.name}
+          key={league.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -156,18 +156,18 @@ function JapanShowcases() {
           }}
         >
           <Image
-            source={{ uri: showcase.logo }}
+            source={{ uri: league.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{league.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 }
 
-export default function ShowcasesScreen() {
+export default function LeaguesScreen() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -176,10 +176,10 @@ export default function ShowcasesScreen() {
         tabBarStyle: { backgroundColor: '#f3f3f3' },
       }}
     >
-      <Tab.Screen name="All" component={AllShowcases} />
-      <Tab.Screen name="China" component={ChinaShowcases} />
-      <Tab.Screen name="Korea" component={KoreaShowcases} />
-      <Tab.Screen name="Japan" component={JapanShowcases} />
+      <Tab.Screen name="All" component={AllLeagues} />
+      <Tab.Screen name="China" component={ChinaLeagues} />
+      <Tab.Screen name="Korea" component={KoreaLeagues} />
+      <Tab.Screen name="Japan" component={JapanLeagues} />
     </Tab.Navigator>
   );
 }

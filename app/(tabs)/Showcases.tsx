@@ -3,40 +3,40 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { useAdmin } from '../src/context/AdminContext';
+import { useAdmin } from '../../src/context/AdminContext';
 
-type TournamentsStackParamList = {
-  Tournaments: undefined;
+type ShowcasesStackParamList = {
+  Showcases: undefined;
   AddEvent: { onAdd: ({ name }: { name: string }) => void };
   Details: { name: string; logo: string };
 };
 
-type TournamentsScreenNavigationProp = NativeStackNavigationProp<
-  TournamentsStackParamList,
-  'Tournaments'
+type ShowcasesScreenNavigationProp = NativeStackNavigationProp<
+  ShowcasesStackParamList,
+  'Showcases'
 >;
 
-type Tournament = {
+type Showcase = {
   name: string;
   logo: string;
   tag: 'China' | 'Korea' | 'Japan';
 };
 
-const initialTournaments: Tournament[] = [
-  { name: 'Asia Cup', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' },
-  { name: 'Winter Classic', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Korea' },
-  { name: 'Champions Trophy', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Japan' },
+const initialShowcases: Showcase[] = [
+  { name: 'Elite Showcase', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' },
+  { name: 'Future Stars', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Korea' },
+  { name: 'Rising Sun', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'Japan' },
 ];
 
 const Tab = createMaterialTopTabNavigator();
 
-function AllTournaments() {
-  const navigation = useNavigation<TournamentsScreenNavigationProp>();
+function AllShowcases() {
+  const navigation = useNavigation<ShowcasesScreenNavigationProp>();
   const { isAdmin } = useAdmin();
-  const [tournaments, setTournaments] = React.useState<Tournament[]>(initialTournaments);
+  const [showcases, setShowcases] = React.useState(initialShowcases);
 
   const handleAddEvent = ({ name }: { name: string }) => {
-    setTournaments(prev => [
+    setShowcases(prev => [
       ...prev,
       { name, logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg', tag: 'China' }, // Default tag
     ]);
@@ -58,9 +58,9 @@ function AllTournaments() {
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Add Event</Text>
         </TouchableOpacity>
       )}
-      {tournaments.map(tournament => (
+      {showcases.map(showcase => (
         <TouchableOpacity
-          key={tournament.name}
+          key={showcase.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -69,30 +69,27 @@ function AllTournaments() {
             padding: 12,
             marginBottom: 16,
           }}
-          onPress={() => navigation.navigate('Details', { name: tournament.name, logo: tournament.logo })}
+          onPress={() => navigation.navigate('Details', { name: showcase.name, logo: showcase.logo })}
         >
           <Image
-            source={{ uri: tournament.logo }}
+            source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <View>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
-            <Text style={{ fontSize: 14, color: '#555' }}>Tag: {tournament.tag}</Text>
-          </View>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 }
 
-function ChinaTournaments() {
-  const tournaments = initialTournaments.filter(t => t.tag === 'China');
+function ChinaShowcases() {
+  const showcases = initialShowcases.filter(s => s.tag === 'China');
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
-      {tournaments.map(tournament => (
+      {showcases.map(showcase => (
         <TouchableOpacity
-          key={tournament.name}
+          key={showcase.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -103,24 +100,24 @@ function ChinaTournaments() {
           }}
         >
           <Image
-            source={{ uri: tournament.logo }}
+            source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 }
 
-function KoreaTournaments() {
-  const tournaments = initialTournaments.filter(t => t.tag === 'Korea');
+function KoreaShowcases() {
+  const showcases = initialShowcases.filter(s => s.tag === 'Korea');
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
-      {tournaments.map(tournament => (
+      {showcases.map(showcase => (
         <TouchableOpacity
-          key={tournament.name}
+          key={showcase.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -131,24 +128,24 @@ function KoreaTournaments() {
           }}
         >
           <Image
-            source={{ uri: tournament.logo }}
+            source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 }
 
-function JapanTournaments() {
-  const tournaments = initialTournaments.filter(t => t.tag === 'Japan');
+function JapanShowcases() {
+  const showcases = initialShowcases.filter(s => s.tag === 'Japan');
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
-      {tournaments.map(tournament => (
+      {showcases.map(showcase => (
         <TouchableOpacity
-          key={tournament.name}
+          key={showcase.name}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -159,18 +156,18 @@ function JapanTournaments() {
           }}
         >
           <Image
-            source={{ uri: tournament.logo }}
+            source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   );
 }
 
-export default function TournamentsScreen() {
+export default function ShowcasesScreen() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -179,10 +176,10 @@ export default function TournamentsScreen() {
         tabBarStyle: { backgroundColor: '#f3f3f3' },
       }}
     >
-      <Tab.Screen name="All" component={AllTournaments} />
-      <Tab.Screen name="China" component={ChinaTournaments} />
-      <Tab.Screen name="Korea" component={KoreaTournaments} />
-      <Tab.Screen name="Japan" component={JapanTournaments} />
+      <Tab.Screen name="All" component={AllShowcases} />
+      <Tab.Screen name="China" component={ChinaShowcases} />
+      <Tab.Screen name="Korea" component={KoreaShowcases} />
+      <Tab.Screen name="Japan" component={JapanShowcases} />
     </Tab.Navigator>
   );
 }
