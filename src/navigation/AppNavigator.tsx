@@ -4,11 +4,11 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import TournamentsScreen from '../../app/Tournaments'
-import ShowcasesScreen   from '../../app/Showcases'
-import LeaguesScreen     from '../../app/Leagues'
-import FavoritesScreen   from '../../app/Favorites'
-import MoreScreen        from '../../app/More'
+import TournamentsScreen from '../../app/(tabs)/Tournaments'
+import ShowcasesScreen   from '../../app/(tabs)/Showcases'
+import LeaguesScreen     from '../../app/(tabs)/Leagues'
+import FavoritesScreen   from '../../app/(tabs)/Favorites'
+import MoreScreen        from '../../app/(tabs)/More'
 import AddEvent          from '../modules/AddEvent'
 import LoginScreen       from '../modules/LoginScreen'
 
@@ -39,7 +39,7 @@ export type RootTabParamList = {
   Leagues: undefined
   Favorites: undefined
   More: undefined
-  Login: undefined; // <-- Add this line
+  Login: undefined;
 }
 
 // 2) Create navigators
