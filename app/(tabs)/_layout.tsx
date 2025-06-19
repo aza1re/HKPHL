@@ -1,6 +1,6 @@
 // app/_layout.tsx
 import { Tabs } from "expo-router";
-import { AdminProvider } from "../../src/context/AdminContext";
+import { AdminProvider } from "../../context/AdminContext";
 
 export default function Layout() {
   return (
