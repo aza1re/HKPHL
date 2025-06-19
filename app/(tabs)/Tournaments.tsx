@@ -3,7 +3,8 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { useAdmin } from '../../src/context/AdminContext';
+import { useAdmin } from '../../context/AdminContext';
+import { useRouter } from 'expo-router';
 
 type TournamentsStackParamList = {
   Tournaments: undefined;
@@ -34,6 +35,7 @@ function AllTournaments() {
   const navigation = useNavigation<TournamentsScreenNavigationProp>();
   const { isAdmin } = useAdmin();
   const [tournaments, setTournaments] = React.useState<Tournament[]>(initialTournaments);
+  const router = useRouter();
 
   const handleAddEvent = ({ name }: { name: string }) => {
     setTournaments(prev => [
@@ -69,7 +71,7 @@ function AllTournaments() {
             padding: 12,
             marginBottom: 16,
           }}
-          onPress={() => navigation.navigate('Details', { name: tournament.name, logo: tournament.logo })}
+          onPress={() => router.push(`/template/tournaments/${encodeURIComponent(tournament.name)}`)}
         >
           <Image
             source={{ uri: tournament.logo }}
@@ -78,7 +80,7 @@ function AllTournaments() {
           />
           <View>
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
-            <Text style={{ fontSize: 14, color: '#555' }}>Tag: {tournament.tag}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{tournament.tag}</Text>
           </View>
         </TouchableOpacity>
       ))}
@@ -88,6 +90,7 @@ function AllTournaments() {
 
 function ChinaTournaments() {
   const tournaments = initialTournaments.filter(t => t.tag === 'China');
+  const router = useRouter();
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
       {tournaments.map(tournament => (
@@ -101,13 +104,17 @@ function ChinaTournaments() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => router.push(`/template/tournaments/${encodeURIComponent(tournament.name)}`)}
         >
           <Image
             source={{ uri: tournament.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{tournament.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -116,6 +123,7 @@ function ChinaTournaments() {
 
 function KoreaTournaments() {
   const tournaments = initialTournaments.filter(t => t.tag === 'Korea');
+  const router = useRouter();
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
       {tournaments.map(tournament => (
@@ -129,13 +137,17 @@ function KoreaTournaments() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => router.push(`/template/tournaments/${encodeURIComponent(tournament.name)}`)}
         >
           <Image
             source={{ uri: tournament.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{tournament.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -144,6 +156,7 @@ function KoreaTournaments() {
 
 function JapanTournaments() {
   const tournaments = initialTournaments.filter(t => t.tag === 'Japan');
+  const router = useRouter();
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
       {tournaments.map(tournament => (
@@ -157,13 +170,17 @@ function JapanTournaments() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => router.push(`/template/tournaments/${encodeURIComponent(tournament.name)}`)}
         >
           <Image
             source={{ uri: tournament.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{tournament.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{tournament.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>

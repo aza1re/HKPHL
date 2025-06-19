@@ -3,7 +3,8 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { useAdmin } from '../../src/context/AdminContext';
+import { useAdmin } from '../../context/AdminContext';
+import { useRouter } from 'expo-router';
 
 type ShowcasesStackParamList = {
   Showcases: undefined;
@@ -34,6 +35,7 @@ function AllShowcases() {
   const navigation = useNavigation<ShowcasesScreenNavigationProp>();
   const { isAdmin } = useAdmin();
   const [showcases, setShowcases] = React.useState(initialShowcases);
+  const router = useRouter();
 
   const handleAddEvent = ({ name }: { name: string }) => {
     setShowcases(prev => [
@@ -69,14 +71,17 @@ function AllShowcases() {
             padding: 12,
             marginBottom: 16,
           }}
-          onPress={() => navigation.navigate('Details', { name: showcase.name, logo: showcase.logo })}
+          onPress={() => router.push(`/template/showcases-${encodeURIComponent(showcase.name)}`)}
         >
           <Image
             source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{showcase.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -85,6 +90,7 @@ function AllShowcases() {
 
 function ChinaShowcases() {
   const showcases = initialShowcases.filter(s => s.tag === 'China');
+  const router = useRouter();
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
       {showcases.map(showcase => (
@@ -98,13 +104,17 @@ function ChinaShowcases() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => router.push(`/template/showcases/${encodeURIComponent(showcase.name)}`)}
         >
           <Image
             source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{showcase.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -113,6 +123,7 @@ function ChinaShowcases() {
 
 function KoreaShowcases() {
   const showcases = initialShowcases.filter(s => s.tag === 'Korea');
+  const router = useRouter();
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
       {showcases.map(showcase => (
@@ -126,13 +137,17 @@ function KoreaShowcases() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => router.push(`/template/showcases/${encodeURIComponent(showcase.name)}`)}
         >
           <Image
             source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{showcase.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -141,6 +156,7 @@ function KoreaShowcases() {
 
 function JapanShowcases() {
   const showcases = initialShowcases.filter(s => s.tag === 'Japan');
+  const router = useRouter();
   return (
     <ScrollView contentContainerStyle={{ padding: 24 }}>
       {showcases.map(showcase => (
@@ -154,13 +170,17 @@ function JapanShowcases() {
             padding: 12,
             marginBottom: 16,
           }}
+          onPress={() => router.push(`/template/showcases/${encodeURIComponent(showcase.name)}`)}
         >
           <Image
             source={{ uri: showcase.logo }}
             style={{ width: 48, height: 48, marginRight: 16, borderRadius: 24 }}
             resizeMode="contain"
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{showcase.name}</Text>
+            <Text style={{ fontSize: 14, color: '#555' }}>{showcase.tag}</Text>
+          </View>
         </TouchableOpacity>
       ))}
     </ScrollView>

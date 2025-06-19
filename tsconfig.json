@@ -14,5 +14,5 @@
     "navigation-shims.d.ts",
     "firebase-shims.d.ts",
     "src/**/*"
-, "app/Favorites.tsx", "app/Leagues.tsx", "app/More.tsx", "app/Tournaments.tsx", "app/Showcases.tsx"  ]
+, "app/Favorites.tsx", "app/Leagues.tsx", "app/More.tsx", "app/Tournaments.tsx", "app/Showcases.tsx", "context", "firebase", "modules", "navigation"  ]
 }
