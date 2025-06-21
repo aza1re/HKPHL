@@ -13,6 +13,15 @@
     "global.d.ts",
     "navigation-shims.d.ts",
     "firebase-shims.d.ts",
-    "src/**/*"
-, "app/Favorites.tsx", "app/Leagues.tsx", "app/More.tsx", "app/Tournaments.tsx", "app/Showcases.tsx", "context", "firebase", "modules", "navigation"  ]
+    "src/**/*",
+    "app/Favorites.tsx",
+    "app/Leagues.tsx",
+    "app/More.tsx",
+    "app/Tournaments.tsx",
+    "app/Showcases.tsx",
+    "context",
+    "firebase",
+    "modules",
+    "navigation"
+  ]
 }
