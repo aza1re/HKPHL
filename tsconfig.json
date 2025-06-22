@@ -2,17 +2,27 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "target": "esnext",
-    "module": "es2015",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "jsx": "react-native",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "isolatedModules": true
   },
   "include": [
     "App.tsx",
     "global.d.ts",
-    "navigation-shims.d.ts",
     "firebase-shims.d.ts",
+    "app/**/*",
+    "context/**/*",
+    "firebase/**/*",
+    "types/**/*",
     "src/**/*"
-, "app/Favorites.tsx", "app/Leagues.tsx", "app/More.tsx", "app/Tournaments.tsx", "app/Showcases.tsx", "context", "firebase", "modules", "navigation"  ]
+  ],
+  "exclude": ["node_modules", "dist", "build", ".expo"]
 }
