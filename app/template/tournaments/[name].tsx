@@ -278,7 +278,7 @@ export default function TournamentTemplateScreen() {
       tabBar={props => <CustomTabBar {...props} />}
       screenOptions={({ route }) => ({
         headerShown: true,
-        headerStyle: { height: 60 },// <-- Add this line
+        headerStyle: { height: 100 }, // Increase this value for a thicker header
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
             case 'Teams':
@@ -305,34 +305,39 @@ export default function TournamentTemplateScreen() {
         component={TeamsScreen}
         options={{
           headerLeft: () => (
-            <TouchableOpacity
-              style={{ marginLeft: 16 }}
-              onPress={() => {
-                // Example: go back or open a drawer
-                // router.back(); // If you want to go back
-                // or do something else
-              }}
-            >
-              <Ionicons name="arrow-back" size={24} color="#007AFF" />
-            </TouchableOpacity>
+            <Ionicons name="arrow-back" size={24} color="#007AFF" style={{ marginLeft: 16 }} />
           ),
-          title: 'Teams', // Optional: set a custom title
         }}
       />
-      <Tab.Screen name="Schedule" component={ScheduleScreen} />
-      <Tab.Screen name="Score" component={ScoreScreen} />
-      {/* Move Home here to make it the center tab */}
+      <Tab.Screen
+        name="Schedule"
+        component={ScheduleScreen}
+        options={{
+          headerLeft: () => (
+            <Ionicons name="arrow-back" size={24} color="#007AFF" style={{ marginLeft: 16 }} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Score"
+        component={ScoreScreen}
+        options={{
+          headerLeft: () => (
+            <Ionicons name="arrow-back" size={24} color="#007AFF" style={{ marginLeft: 16 }} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Home"
+        component={() => <TournamentHome name={name as string} />}
         options={{
           tabBarButton: (props) => (
             <CustomHomeButton {...props} logoUri={logo as string} />
           ),
           tabBarLabel: '',
+          // Optionally remove headerLeft for Home
         }}
-      >
-        {() => <TournamentHome name={name as string} />}
-      </Tab.Screen>
+      />
       <Tab.Screen name="Standings" component={StandingsScreen} />
       <Tab.Screen
         name="Stats"
