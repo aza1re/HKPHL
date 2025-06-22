@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Alert, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert, StyleSheet, ScrollView, SafeAreaView, Modal } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
@@ -9,7 +9,7 @@ function TournamentHome({ name }: { name: string }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <Image
-        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg' }}
+        source={require('../../../assets/favicon.png')}
         style={{ width: 120, height: 120, marginBottom: 16 }}
       />
       <Text style={{ fontSize: 16 }}>Welcome to the tournament!</Text>
@@ -21,7 +21,9 @@ function TeamsScreen() {
   // Generate teams A-J, all with the same logo
   const allTeams = Array.from({ length: 10 }, (_, i) => ({
     name: `Team ${String.fromCharCode(65 + i)}`,
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg',
+    logo: require('../../../assets/favicon.png'),
+    division: i < 3 ? 'U13' : i < 6 ? 'U15' : 'U18',
+    description: 'This is a sample team description. More info will be available soon.'
   }));
 
   // Randomly assign teams to divisions
@@ -32,48 +34,59 @@ function TeamsScreen() {
     U18: shuffled.slice(6, 10),
   };
 
-  const handleTeamPress = (team: { name: string }) => {
-    Alert.alert('Team Details', `Team details for ${team.name} coming soon!`);
+  const [selectedTeam, setSelectedTeam] = React.useState<null | typeof allTeams[0]>(null);
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const handleTeamPress = (team: typeof allTeams[0]) => {
+    setSelectedTeam(team);
+    setModalVisible(true);
   };
 
   return (
-    <ScrollView style={{ flex: 1, paddingHorizontal: 24, paddingTop: 16 }}>
-      {Object.entries(divisions).map(([division, teams]) => (
-        <View key={division} style={{ marginBottom: 24 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 8 }}>{division}</Text>
-          {teams.map(team => (
-            <View
-              key={team.name}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: '#f3f3f3',
-                borderRadius: 8,
-                marginBottom: 8,
-                padding: 8,
-              }}
-            >
-              <Image
-                source={{ uri: team.logo }}
-                style={{ width: 36, height: 36, borderRadius: 18, marginRight: 12, borderWidth: 1, borderColor: '#ccc' }}
-              />
-              <Text
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, paddingHorizontal: 24, paddingTop: 16 }}>
+        {Object.entries(divisions).map(([division, teams]) => (
+          <View key={division} style={{ marginBottom: 24 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 8 }}>{division} Division</Text>
+            {teams.map(team => (
+              <TouchableOpacity
+                key={team.name}
+                style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#f3f3f3', borderRadius: 8, padding: 12, marginBottom: 10 }}
                 onPress={() => handleTeamPress(team)}
-                style={{
-                  fontSize: 16,
-                  color: '#333',
-                  flex: 1,
-                  paddingVertical: 8,
-                  textAlign: 'left',
-                }}
               >
-                {team.name}
-              </Text>
-            </View>
-          ))}
+                <Image source={team.logo} style={{ width: 40, height: 40, borderRadius: 20, marginRight: 12 }} />
+                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{team.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+      <Modal
+        visible={modalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: '85%', backgroundColor: '#fff', borderRadius: 16, padding: 24, alignItems: 'center', elevation: 8 }}>
+            {selectedTeam && (
+              <>
+                <Image source={selectedTeam.logo} style={{ width: 80, height: 80, borderRadius: 40, marginBottom: 16 }} />
+                <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 4 }}>{selectedTeam.name}</Text>
+                <Text style={{ fontSize: 16, color: '#555', marginBottom: 8 }}>{selectedTeam.division} Division</Text>
+                <Text style={{ fontSize: 15, color: '#333', textAlign: 'center', marginBottom: 16 }}>{selectedTeam.description}</Text>
+                <TouchableOpacity
+                  style={{ backgroundColor: '#007bff', borderRadius: 8, paddingVertical: 10, paddingHorizontal: 24 }}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Close</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
         </View>
-      ))}
-    </ScrollView>
+      </Modal>
+    </View>
   );
 }
 
@@ -88,40 +101,23 @@ function ScheduleScreen() {
     { time: '14:00', home: 'Team A', away: 'Team C', division: 'U18', location: 'Rink 2' },
   ];
 
-  const logoUri = 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Football_%28soccer_ball%29.svg';
+  // Group by division
+  const divisions = Array.from(new Set(schedule.map(s => s.division)));
 
   return (
     <ScrollView style={{ flex: 1, padding: 24 }}>
-      {schedule.map((item, idx) => (
-        <React.Fragment key={idx}>
-          <View
-            style={{
-              backgroundColor: '#f3f3f3',
-              borderRadius: 8,
-              padding: 12,
-              marginBottom: 12,
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
-              <Image source={{ uri: logoUri }} style={{ width: 32, height: 32, borderRadius: 16, marginRight: 8 }} />
-              <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 8 }}>{item.home}</Text>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', marginHorizontal: 4 }}>vs</Text>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', marginLeft: 8 }}>{item.away}</Text>
-              <Image source={{ uri: logoUri }} style={{ width: 32, height: 32, borderRadius: 16, marginLeft: 8 }} />
+      {divisions.map(division => (
+        <View key={division} style={{ marginBottom: 28 }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>{division} Division</Text>
+          {schedule.filter(s => s.division === division).map((item, idx) => (
+            <View key={idx} style={{ backgroundColor: '#f3f3f3', borderRadius: 8, padding: 14, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.home} vs {item.away}</Text>
+                <Text style={{ fontSize: 14, color: '#555', marginTop: 2 }}>Time: {item.time}   |   Location: {item.location}</Text>
+              </View>
             </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 14, color: '#555' }}>
-                Division: {item.division}
-              </Text>
-              <Text style={{ fontSize: 14, color: '#555' }}>
-                Time: {item.time} &bull; Location: {item.location}
-              </Text>
-            </View>
-          </View>
-          {idx < schedule.length - 1 && (
-            <View style={{ height: 1, backgroundColor: '#000', marginVertical: 4, marginHorizontal: 8 }} />
-          )}
-        </React.Fragment>
+          ))}
+        </View>
       ))}
     </ScrollView>
   );
@@ -130,53 +126,141 @@ function ScheduleScreen() {
 function ScoreScreen() {
   // Example scores data
   const scores = [
-    { match: 'Team A vs Team B', division: 'U13', score: '2 - 1' },
-    { match: 'Team C vs Team D', division: 'U13', score: '0 - 0' },
-    { match: 'Team E vs Team F', division: 'U15', score: '3 - 2' },
-    { match: 'Team G vs Team H', division: 'U15', score: '1 - 4' },
-    { match: 'Team I vs Team J', division: 'U18', score: '2 - 2' },
-    { match: 'Team A vs Team C', division: 'U18', score: '1 - 3' },
+    { time: '09:00', home: 'Team A', away: 'Team B', division: 'U13', location: 'Rink 1', score: '2 - 1' },
+    { time: '10:00', home: 'Team C', away: 'Team D', division: 'U13', location: 'Rink 2', score: '0 - 0' },
+    { time: '11:00', home: 'Team E', away: 'Team F', division: 'U15', location: 'Rink 1', score: '3 - 2' },
+    { time: '12:00', home: 'Team G', away: 'Team H', division: 'U15', location: 'Rink 2', score: '1 - 4' },
+    { time: '13:00', home: 'Team I', away: 'Team J', division: 'U18', location: 'Rink 1', score: '2 - 2' },
+    { time: '14:00', home: 'Team A', away: 'Team C', division: 'U18', location: 'Rink 2', score: '1 - 3' },
   ];
+
+  const logoUri = require('../../../assets/favicon.png');
 
   return (
     <ScrollView style={{ flex: 1, padding: 24 }}>
-      <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 16 }}>Scores</Text>
       {scores.map((item, idx) => (
-        <View
-          key={idx}
-          style={{
-            backgroundColor: '#f3f3f3',
-            borderRadius: 8,
-            padding: 12,
-            marginBottom: 12,
-          }}
-        >
-          <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 4 }}>{item.match}</Text>
-          <Text style={{ fontSize: 14, color: '#555' }}>
-            Division: {item.division}
-          </Text>
-          <Text style={{ fontSize: 16, color: '#222', marginTop: 4 }}>
-            Score: {item.score}
-          </Text>
-        </View>
+        <React.Fragment key={idx}>
+          <View
+            style={{
+              backgroundColor: '#f3f3f3',
+              borderRadius: 12,
+              padding: 24,
+              marginBottom: 20,
+              alignItems: 'center',
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+              <View style={{ flex: 1, alignItems: 'center' }}>
+                <Image source={logoUri} style={{ width: 64, height: 64, borderRadius: 32, marginBottom: 8 }} />
+                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>{item.home}</Text>
+              </View>
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 16, minWidth: 120 }}>
+                <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#000000', marginBottom: 4 }}>{item.score}</Text>
+                <Text
+                  style={{ fontSize: 18, color: '#555', marginBottom: 4, flexShrink: 0, flexWrap: 'nowrap' }}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {item.division} Division
+                </Text>
+              </View>
+              <View style={{ flex: 1, alignItems: 'center' }}>
+                <Image source={logoUri} style={{ width: 64, height: 64, borderRadius: 32, marginBottom: 8 }} />
+                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>{item.away}</Text>
+              </View>
+            </View>
+            <Text style={{ fontSize: 16, color: '#555', marginTop: 12 }}>
+              Time: {item.time}   |   Location: {item.location}
+            </Text>
+          </View>
+          {idx < scores.length - 1 && (
+            <View style={{ height: 1, backgroundColor: '#000', marginVertical: 4, marginHorizontal: 8 }} />
+          )}
+        </React.Fragment>
       ))}
     </ScrollView>
   );
 }
 
 function StandingsScreen() {
+  // Sample standings data
+  const standings = [
+    { team: 'Team A', division: 'U13', GP: 3, W: 2, L: 1, T: 0, PTS: 6 },
+    { team: 'Team B', division: 'U13', GP: 3, W: 2, L: 1, T: 0, PTS: 6 },
+    { team: 'Team C', division: 'U13', GP: 3, W: 1, L: 2, T: 0, PTS: 3 },
+    { team: 'Team D', division: 'U15', GP: 3, W: 3, L: 0, T: 0, PTS: 9 },
+    { team: 'Team E', division: 'U15', GP: 3, W: 1, L: 2, T: 0, PTS: 3 },
+    { team: 'Team F', division: 'U18', GP: 3, W: 2, L: 0, T: 1, PTS: 7 },
+    { team: 'Team G', division: 'U18', GP: 3, W: 1, L: 1, T: 1, PTS: 4 },
+    { team: 'Team H', division: 'U18', GP: 3, W: 0, L: 2, T: 1, PTS: 1 },
+  ];
+
+  // Group by division
+  const divisions = Array.from(new Set(standings.map(s => s.division)));
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Standings</Text>
-    </View>
+    <ScrollView style={{ flex: 1, padding: 24 }}>
+      {divisions.map(division => (
+        <View key={division} style={{ marginBottom: 24 }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{division} Standings</Text>
+          <View style={{ flexDirection: 'row', backgroundColor: '#f3f3f3', borderRadius: 6, paddingVertical: 6, marginBottom: 2 }}>
+            <Text style={{ flex: 2, fontWeight: 'bold', textAlign: 'left', paddingLeft: 8 }}>Team</Text>
+            <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>GP</Text>
+            <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>W</Text>
+            <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>L</Text>
+            <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>T</Text>
+            <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>PTS</Text>
+          </View>
+          {standings.filter(s => s.division === division).map((row, idx) => (
+            <View key={row.team} style={{ flexDirection: 'row', backgroundColor: idx % 2 === 0 ? '#fff' : '#f9f9f9', borderRadius: 6, paddingVertical: 6 }}>
+              <Text style={{ flex: 2, textAlign: 'left', paddingLeft: 8 }}>{row.team}</Text>
+              <Text style={{ flex: 1, textAlign: 'center' }}>{row.GP}</Text>
+              <Text style={{ flex: 1, textAlign: 'center' }}>{row.W}</Text>
+              <Text style={{ flex: 1, textAlign: 'center' }}>{row.L}</Text>
+              <Text style={{ flex: 1, textAlign: 'center' }}>{row.T}</Text>
+              <Text style={{ flex: 1, textAlign: 'center' }}>{row.PTS}</Text>
+            </View>
+          ))}
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
 function StatisticsScreen() {
+  // Sample player stats data
+  const stats = [
+    { player: 'Alex Kim', team: 'Team A', GP: 3, G: 5, A: 2, PTS: 7, PIM: 0 },
+    { player: 'Brian Lee', team: 'Team B', GP: 3, G: 3, A: 4, PTS: 7, PIM: 2 },
+    { player: 'Chris Park', team: 'Team D', GP: 3, G: 4, A: 1, PTS: 5, PIM: 4 },
+    { player: 'David Chen', team: 'Team F', GP: 3, G: 2, A: 3, PTS: 5, PIM: 0 },
+    { player: 'Eric Wu', team: 'Team G', GP: 3, G: 1, A: 5, PTS: 6, PIM: 0 },
+  ];
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Statistics</Text>
-    </View>
+    <ScrollView style={{ flex: 1, padding: 24 }}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>Top Player Stats</Text>
+      <View style={{ flexDirection: 'row', backgroundColor: '#f3f3f3', borderRadius: 6, paddingVertical: 6, marginBottom: 2 }}>
+        <Text style={{ flex: 2, fontWeight: 'bold', textAlign: 'left', paddingLeft: 8 }}>Player</Text>
+        <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>Team</Text>
+        <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>GP</Text>
+        <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>G</Text>
+        <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>A</Text>
+        <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>PTS</Text>
+        <Text style={{ flex: 1, fontWeight: 'bold', textAlign: 'center' }}>PIM</Text>
+      </View>
+      {stats.map((row, idx) => (
+        <View key={row.player} style={{ flexDirection: 'row', backgroundColor: idx % 2 === 0 ? '#fff' : '#f9f9f9', borderRadius: 6, paddingVertical: 6 }}>
+          <Text style={{ flex: 2, textAlign: 'left', paddingLeft: 8 }}>{row.player}</Text>
+          <Text style={{ flex: 1, textAlign: 'center' }}>{row.team}</Text>
+          <Text style={{ flex: 1, textAlign: 'center' }}>{row.GP}</Text>
+          <Text style={{ flex: 1, textAlign: 'center' }}>{row.G}</Text>
+          <Text style={{ flex: 1, textAlign: 'center' }}>{row.A}</Text>
+          <Text style={{ flex: 1, textAlign: 'center' }}>{row.PTS}</Text>
+          <Text style={{ flex: 1, textAlign: 'center' }}>{row.PIM}</Text>
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
@@ -188,19 +272,72 @@ function MoreScreen() {
   );
 }
 
+// --- Custom Header ---
+function CustomHeader({ title, onBack }: { title: string; onBack?: () => void }) {
+  return (
+    <SafeAreaView style={{ backgroundColor: '#fff' }}>
+      <View style={customHeaderStyles.container}>
+        {onBack ? (
+          <TouchableOpacity onPress={onBack} style={customHeaderStyles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#007AFF" />
+          </TouchableOpacity>
+        ) : (
+          <View style={customHeaderStyles.backButton} />
+        )}
+        <View style={customHeaderStyles.centerContainer}>
+          <Text style={customHeaderStyles.title}>{title}</Text>
+        </View>
+        <View style={customHeaderStyles.rightSpace} />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const customHeaderStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 62,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    backgroundColor: '#fff',
+  },
+  backButton: {
+    width: 40,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  centerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#222',
+    textAlign: 'center',
+  },
+  rightSpace: {
+    width: 40,
+  },
+});
+
 // --- Main Template ---
 const Tab = createBottomTabNavigator();
 
 function CustomHomeButton(props: any) {
-  const { logoUri, ...rest } = props;
+  // Use logoSource prop if provided, else fallback to favicon
+  const logoSource = props.logoSource || require('../../../assets/favicon.png');
   return (
     <TouchableOpacity
       style={styles.customButton}
-      {...rest}
+      {...props}
       activeOpacity={0.8}
     >
       <View style={styles.circle}>
-        <Image source={{ uri: logoUri }} style={styles.logo} resizeMode="contain" />
+        <Image source={logoSource} style={styles.logo} resizeMode="contain" />
       </View>
     </TouchableOpacity>
   );
@@ -209,6 +346,11 @@ function CustomHomeButton(props: any) {
 function CustomTabBar(props: any) {
   const { state, descriptors, navigation } = props;
   const { logo } = useLocalSearchParams();
+
+  // Determine the logo source for the home button
+  const logoSource = logo && typeof logo === 'string' && logo.startsWith('http')
+    ? { uri: logo }
+    : require('../../../assets/favicon.png');
 
   return (
     <View style={{ flexDirection: 'row', height: 70, backgroundColor: '#fff', elevation: 8 }}>
@@ -241,7 +383,7 @@ function CustomTabBar(props: any) {
               activeOpacity={0.8}
             >
               <View style={styles.circle}>
-                <Image source={{ uri: logo as string }} style={styles.logo} resizeMode="contain" />
+                <Image source={logoSource} style={styles.logo} resizeMode="contain" />
               </View>
             </TouchableOpacity>
           );
@@ -272,82 +414,66 @@ export default function TournamentTemplateScreen() {
   const router = useRouter();
   const { name, logo } = useLocalSearchParams();
 
+  // Use logo from params if available, else fallback to favicon
+  let logoSource = require('../../../assets/favicon.png');
+  if (logo && typeof logo === 'string' && logo.startsWith('http')) {
+    logoSource = { uri: logo };
+  }
+
+  const goToTournamentList = () => {
+    router.replace('/Tournaments');
+  };
+
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      tabBar={props => <CustomTabBar {...props} />}
-      screenOptions={({ route }) => ({
-        headerShown: true,
-        headerStyle: { height: 100 }, // Increase this value for a thicker header
-        tabBarIcon: ({ color, size }) => {
-          switch (route.name) {
-            case 'Teams':
-              return <MaterialCommunityIcons name="account-group" size={size} color={color} />;
-            case 'Schedule':
-              return <Ionicons name="calendar" size={size} color={color} />;
-            case 'Score':
-              return <FontAwesome5 name="trophy" size={size} color={color} />;
-            case 'Standings':
-              return <MaterialCommunityIcons name="format-list-numbered" size={size} color={color} />;
-            case 'Stats':
-              return <Ionicons name="stats-chart" size={size} color={color} />;
-            case 'More':
-              return <Ionicons name="ellipsis-horizontal" size={size} color={color} />;
-            default:
-              return null;
-          }
-        },
-        tabBarLabelStyle: { fontSize: 12 },
-      })}
-    >
-      <Tab.Screen
-        name="Teams"
-        component={TeamsScreen}
-        options={{
-          headerLeft: () => (
-            <Ionicons name="arrow-back" size={24} color="#007AFF" style={{ marginLeft: 16 }} />
-          ),
-        }}
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <CustomHeader
+        title={name ? String(name) : 'Tournament'}
+        onBack={goToTournamentList}
       />
-      <Tab.Screen
-        name="Schedule"
-        component={ScheduleScreen}
-        options={{
-          headerLeft: () => (
-            <Ionicons name="arrow-back" size={24} color="#007AFF" style={{ marginLeft: 16 }} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Score"
-        component={ScoreScreen}
-        options={{
-          headerLeft: () => (
-            <Ionicons name="arrow-back" size={24} color="#007AFF" style={{ marginLeft: 16 }} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Home"
-        component={() => <TournamentHome name={name as string} />}
-        options={{
-          tabBarButton: (props) => (
-            <CustomHomeButton {...props} logoUri={logo as string} />
-          ),
-          tabBarLabel: '',
-          // Optionally remove headerLeft for Home
-        }}
-      />
-      <Tab.Screen name="Standings" component={StandingsScreen} />
-      <Tab.Screen
-        name="Stats"
-        component={StatisticsScreen}
-        options={{
-          tabBarLabel: 'Stats',
-        }}
-      />
-      <Tab.Screen name="More" component={MoreScreen} />
-    </Tab.Navigator>
+      <Tab.Navigator
+        initialRouteName="Home"
+        tabBar={props => <CustomTabBar {...props} logoSource={logoSource} />}
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => {
+            switch (route.name) {
+              case 'Teams':
+                return <MaterialCommunityIcons name="account-group" size={size} color={color} />;
+              case 'Schedule':
+                return <Ionicons name="calendar" size={size} color={color} />;
+              case 'Score':
+                return <FontAwesome5 name="trophy" size={size} color={color} />;
+              case 'Standings':
+                return <MaterialCommunityIcons name="format-list-numbered" size={size} color={color} />;
+              case 'Stats':
+                return <Ionicons name="stats-chart" size={size} color={color} />;
+              case 'More':
+                return <Ionicons name="ellipsis-horizontal" size={size} color={color} />;
+              default:
+                return null;
+            }
+          },
+          tabBarLabelStyle: { fontSize: 12 },
+        })}
+      >
+        <Tab.Screen name="Teams" component={TeamsScreen} />
+        <Tab.Screen name="Schedule" component={ScheduleScreen} />
+        <Tab.Screen name="Score" component={ScoreScreen} />
+        <Tab.Screen
+          name="Home"
+          component={() => <TournamentHome name={name as string} />}
+          options={{
+            tabBarButton: (props) => (
+              <CustomHomeButton {...props} logoSource={logoSource} />
+            ),
+            tabBarLabel: '',
+          }}
+        />
+        <Tab.Screen name="Standings" component={StandingsScreen} />
+        <Tab.Screen name="Stats" component={StatisticsScreen} options={{ tabBarLabel: 'Stats' }} />
+        <Tab.Screen name="More" component={MoreScreen} />
+      </Tab.Navigator>
+    </View>
   );
 }
 

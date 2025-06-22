@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { useAdmin } from '../../context/AdminContext';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 type ShowcasesStackParamList = {
   Showcases: undefined;
@@ -187,19 +188,71 @@ function JapanShowcases() {
   );
 }
 
-export default function ShowcasesScreen() {
+function CustomHeader({ title }: { title: string }) {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarIndicatorStyle: { backgroundColor: '#007bff' },
-        tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' },
-        tabBarStyle: { backgroundColor: '#f3f3f3' },
-      }}
-    >
-      <Tab.Screen name="All" component={AllShowcases} />
-      <Tab.Screen name="China" component={ChinaShowcases} />
-      <Tab.Screen name="Korea" component={KoreaShowcases} />
-      <Tab.Screen name="Japan" component={JapanShowcases} />
-    </Tab.Navigator>
+    <SafeAreaView style={{ backgroundColor: '#fff' }}>
+      <View style={customHeaderStyles.container}>
+        <View style={customHeaderStyles.backButton} />
+        <View style={customHeaderStyles.centerContainer}>
+          <Text style={customHeaderStyles.title}>{title}</Text>
+        </View>
+        <View style={customHeaderStyles.rightSpace} />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const customHeaderStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 62,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    backgroundColor: '#fff',
+  },
+  backButton: {
+    width: 40,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  centerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#222',
+    textAlign: 'center',
+  },
+  rightSpace: {
+    width: 40,
+  },
+});
+
+export default function ShowcasesScreen() {
+  const router = useRouter();
+  const goToTournamentList = () => {
+    router.replace('/Tournaments');
+  };
+  return (
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <CustomHeader title="Showcases" />
+      <Tab.Navigator
+        screenOptions={{
+          tabBarIndicatorStyle: { backgroundColor: '#007bff' },
+          tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' },
+          tabBarStyle: { backgroundColor: '#f3f3f3' },
+        }}
+      >
+        <Tab.Screen name="All" component={AllShowcases} />
+        <Tab.Screen name="China" component={ChinaShowcases} />
+        <Tab.Screen name="Korea" component={KoreaShowcases} />
+        <Tab.Screen name="Japan" component={JapanShowcases} />
+      </Tab.Navigator>
+    </View>
   );
 }
