@@ -12,7 +12,9 @@ const AdminContext = createContext<AdminContextType>({
 
 export const useAdmin = () => useContext(AdminContext);
 
-export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [isAdmin, setIsAdmin] = useState(false);
   return (
     <AdminContext.Provider value={{ isAdmin, setIsAdmin }}>
