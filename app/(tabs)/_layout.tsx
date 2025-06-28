@@ -2,11 +2,20 @@ import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { TouchableOpacity, Platform } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { useFonts, BakbakOne_400Regular } from "@expo-google-fonts/bakbak-one";
 
 export default function TabLayout() {
   const router = useRouter();
+
+  const [fontsLoaded] = useFonts({
+    BakbakOne_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <Tabs
@@ -19,8 +28,9 @@ export default function TabLayout() {
           backgroundColor: "#D62828", // Red header background
         },
         headerTitleStyle: {
-          fontSize: 25,
+          fontSize: 30,
           color: "#fff", // White text on red background
+          fontFamily: "BakbakOne_400Regular",
         },
         headerStatusBarHeight: 2,
         tabBarStyle: {
