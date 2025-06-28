@@ -125,6 +125,12 @@ export default function MoreScreen() {
             <Text style={styles.requestButtonText}>Request</Text>
           </TouchableOpacity>
         </View>
+
+        {/* App Info Section */}
+        <View style={styles.appInfoSection}>
+          <View style={styles.appIconPlaceholder}></View>
+          <Text style={styles.appVersion}>Achieve Hockey 1.0.0</Text>
+        </View>
       </ScrollView>
 
       {/* Modals */}
@@ -258,5 +264,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 600,
     color: "black",
+  },
+  appInfoSection: {
+    alignItems: "center",
+    paddingTop: 20,
+  },
+  appIconPlaceholder: {
+    width: 25,
+    height: 25,
+    borderRadius: 7,
+    backgroundColor: "#F0F0F0",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#E5E5E7",
+  },
+  appVersion: {
+    fontSize: 12,
+    color: "grey",
   },
 });
