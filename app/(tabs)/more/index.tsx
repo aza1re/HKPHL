@@ -16,6 +16,7 @@ import AboutUsModal from "./components/AboutUsModal";
 import ContactInfoModal from "./components/ContactInfoModal";
 import FAQModal from "./components/FAQModal";
 import NavigationForTeamsModal from "./components/NavigationForTeamsModal";
+import AnnualReportModal from "./components/AnnualReportModal";
 
 export default function MoreScreen() {
   const router = useRouter();
@@ -23,6 +24,8 @@ export default function MoreScreen() {
   const [contactInfoModalVisible, setContactInfoModalVisible] = useState(false);
   const [faqModalVisible, setFaqModalVisible] = useState(false);
   const [navigationModalVisible, setNavigationModalVisible] = useState(false);
+  const [annualReportModalVisible, setAnnualReportModalVisible] =
+    useState(false);
 
   return (
     <View style={styles.container}>
@@ -117,7 +120,7 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.requestButton}
-            onPress={() => router.push("/more/annual-report" as any)}
+            onPress={() => setAnnualReportModalVisible(true)}
           >
             <Text style={styles.requestButtonText}>Request</Text>
           </TouchableOpacity>
@@ -140,6 +143,10 @@ export default function MoreScreen() {
       <NavigationForTeamsModal
         visible={navigationModalVisible}
         onClose={() => setNavigationModalVisible(false)}
+      />
+      <AnnualReportModal
+        visible={annualReportModalVisible}
+        onClose={() => setAnnualReportModalVisible(false)}
       />
     </View>
   );
