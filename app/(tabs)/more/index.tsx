@@ -19,21 +19,22 @@ export default function MoreScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
-        {/* Team Registration + Chatbot Section */}
+        {/* Team Registration Section */}
         <View style={styles.card}>
           <TouchableOpacity
             style={styles.row}
             onPress={() => router.push("/more/registration/hkphl" as any)}
           >
             <View style={styles.iconWrapper}>
-              <MaterialIcons name="edit-square" size={22} color="black" />
+              <MaterialIcons name="edit-square" size={25} color="black" />
             </View>
             <Text style={styles.rowText}>Team registration</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
           </TouchableOpacity>
+        </View>
 
-          <View style={styles.divider} />
-
+        {/* Chatbot Section */}
+        <View style={styles.card}>
           <TouchableOpacity
             style={styles.row}
             onPress={() => router.push("/more/ai-chatbot" as any)}
@@ -41,7 +42,7 @@ export default function MoreScreen() {
             <View style={styles.iconWrapper}>
               <MaterialCommunityIcons
                 name="robot-happy"
-                size={22}
+                size={25}
                 color="black"
               />
             </View>
@@ -125,20 +126,18 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+    paddingTop: 15,
   },
   card: {
     backgroundColor: "white",
-    borderRadius: 12,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    borderRadius: 7,
+    marginHorizontal: 10,
+    marginVertical: 5,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+    shadowOffset: { width: 0, height: 0 },
   },
   row: {
     flexDirection: "row",
@@ -154,23 +153,22 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   rowText: {
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 18,
     color: "black",
     flex: 1,
   },
   divider: {
     height: 1,
     backgroundColor: "#E5E5E7",
-    marginHorizontal: 16,
+    marginLeft: 12,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     color: "black",
     marginHorizontal: 20,
-    marginTop: 30,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 5,
   },
   simpleRow: {
     flexDirection: "row",
@@ -181,25 +179,22 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
   simpleRowText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "black",
     flex: 1,
   },
   reportCard: {
     backgroundColor: "white",
-    borderRadius: 12,
-    marginHorizontal: 20,
+    borderRadius: 7,
+    marginHorizontal: 10,
     marginTop: 20,
     marginBottom: 20,
     padding: 15,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+    shadowOffset: { width: 0, height: 0 },
   },
   reportHeader: {
     flexDirection: "row",
@@ -207,7 +202,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   reportTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     color: "black",
     marginLeft: 8,
@@ -221,14 +216,14 @@ const styles = StyleSheet.create({
   },
   requestButton: {
     backgroundColor: "#F5EF34",
-    borderRadius: 12,
+    borderRadius: 10,
     height: 40,
     justifyContent: "center",
     alignItems: "center",
   },
   requestButtonText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 600,
     color: "black",
   },
 });
