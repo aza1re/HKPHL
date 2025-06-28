@@ -8,6 +8,13 @@ export default function TeamsLayout() {
         options={{
           title: "Team Details",
           headerBackTitle: "Back",
+          headerStyle: {
+            backgroundColor: "#D62828",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontSize: 20,
+          },
         }}
       />
     </Stack>

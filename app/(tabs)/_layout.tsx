@@ -1,6 +1,8 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { TouchableOpacity, Platform } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function TabLayout() {
@@ -12,15 +14,15 @@ export default function TabLayout() {
         tabBarActiveTintColor: "#D62828", // Red color for active tab
         tabBarInactiveTintColor: "#8E8E93",
         // Global header styling applied to all tabs
+        headerTintColor: "#231716", // Text color for all headers
         headerStyle: {
-          backgroundColor: "#D62828", // Red background for all headers
+          backgroundColor: "#D62828", // Red header background
         },
-        headerTintColor: "#fff", // White text color for all headers
         headerTitleStyle: {
-          fontWeight: "bold",
-          fontSize: 30,
-          textAlign: "left",
+          fontSize: 25,
+          color: "#fff", // White text on red background
         },
+        headerStatusBarHeight: 2,
         tabBarStyle: {
           backgroundColor: "#fff",
           borderTopWidth: 1,
@@ -28,25 +30,24 @@ export default function TabLayout() {
         },
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: "500",
         },
       }}
     >
       <Tabs.Screen
         name="tournaments"
         options={{
-          title: "Tournaments",
+          title: "Tourneys",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="golf" size={size} color={color} />
+            <MaterialIcons name="sports-hockey" size={size + 3} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="education"
         options={{
-          title: "Camps",
+          title: "Education",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calendar" size={size} color={color} />
+            <MaterialIcons name="backpack" size={size} color={color} />
           ),
         }}
       />
@@ -55,7 +56,11 @@ export default function TabLayout() {
         options={{
           title: "Leagues",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="trophy" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="trophy-variant"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
