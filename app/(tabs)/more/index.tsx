@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,9 +12,17 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import AboutUsModal from "./components/AboutUsModal";
+import ContactInfoModal from "./components/ContactInfoModal";
+import FAQModal from "./components/FAQModal";
+import NavigationForTeamsModal from "./components/NavigationForTeamsModal";
 
 export default function MoreScreen() {
   const router = useRouter();
+  const [aboutUsModalVisible, setAboutUsModalVisible] = useState(false);
+  const [contactInfoModalVisible, setContactInfoModalVisible] = useState(false);
+  const [faqModalVisible, setFaqModalVisible] = useState(false);
+  const [navigationModalVisible, setNavigationModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -56,7 +64,7 @@ export default function MoreScreen() {
         <View style={styles.card}>
           <TouchableOpacity
             style={styles.simpleRow}
-            onPress={() => router.push("/more/about-us" as any)}
+            onPress={() => setAboutUsModalVisible(true)}
           >
             <Text style={styles.simpleRowText}>What do we do?</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -66,7 +74,7 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.simpleRow}
-            onPress={() => router.push("/more/about-us" as any)}
+            onPress={() => setContactInfoModalVisible(true)}
           >
             <Text style={styles.simpleRowText}>Contact information</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -76,7 +84,7 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.simpleRow}
-            onPress={() => router.push("/more/about-us" as any)}
+            onPress={() => setFaqModalVisible(true)}
           >
             <Text style={styles.simpleRowText}>FAQ</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -86,7 +94,7 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.simpleRow}
-            onPress={() => router.push("/more/about-us" as any)}
+            onPress={() => setNavigationModalVisible(true)}
           >
             <Text style={styles.simpleRowText}>Navigation for teams</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -115,6 +123,24 @@ export default function MoreScreen() {
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      {/* Modals */}
+      <AboutUsModal
+        visible={aboutUsModalVisible}
+        onClose={() => setAboutUsModalVisible(false)}
+      />
+      <ContactInfoModal
+        visible={contactInfoModalVisible}
+        onClose={() => setContactInfoModalVisible(false)}
+      />
+      <FAQModal
+        visible={faqModalVisible}
+        onClose={() => setFaqModalVisible(false)}
+      />
+      <NavigationForTeamsModal
+        visible={navigationModalVisible}
+        onClose={() => setNavigationModalVisible(false)}
+      />
     </View>
   );
 }
