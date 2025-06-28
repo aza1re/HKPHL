@@ -1,3 +1,2 @@
 // global.d.ts
-import "nativewind/types";
-
+// Global type definitions for the project

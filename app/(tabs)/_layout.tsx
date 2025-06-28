@@ -32,6 +32,7 @@ export default function TabLayout() {
           color: "#fff", // White text on red background
           fontFamily: "BakbakOne_400Regular",
         },
+        headerTitleAlign: "left",
         headerStatusBarHeight: 2,
         tabBarStyle: {
           backgroundColor: "#fff",
