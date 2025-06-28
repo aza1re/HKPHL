@@ -92,11 +92,11 @@ export default function TabLayout() {
             <TouchableOpacity
               onPress={() => router.push("/more/settings" as any)}
             >
-              <Ionicons
-                name="settings-outline"
-                size={24}
+              <MaterialIcons
+                name="settings"
+                size={27}
                 color="#fff"
-                style={{ marginRight: 15 }}
+                style={{ marginRight: 18 }}
               />
             </TouchableOpacity>
           ),
