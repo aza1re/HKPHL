@@ -40,20 +40,6 @@ export default function MoreLayout() {
           headerBackTitle: "Back",
         }}
       />
-      <Stack.Screen
-        name="about-us"
-        options={{
-          title: "About Us",
-          headerBackTitle: "Back",
-        }}
-      />
-      <Stack.Screen
-        name="annual-report"
-        options={{
-          title: "Annual Report",
-          headerBackTitle: "Back",
-        }}
-      />
     </Stack>
   );
 }
