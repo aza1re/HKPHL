@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "black",
     marginHorizontal: 20,
