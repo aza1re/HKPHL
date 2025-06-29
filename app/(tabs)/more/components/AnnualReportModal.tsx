@@ -1,3 +1,5 @@
+// TODO: have an option to choose the player and year.
+
 import React from "react";
 import {
   View,

@@ -1,3 +1,5 @@
+// TODO: Ask what kind of information might be needed here
+
 import React from "react";
 import {
   View,

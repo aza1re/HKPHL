@@ -69,7 +69,7 @@ export default function MoreScreen() {
             style={styles.simpleRow}
             onPress={() => setAboutUsModalVisible(true)}
           >
-            <Text style={styles.simpleRowText}>What do we do?</Text>
+            <Text style={styles.simpleRowText}>About Achieve Hockey</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
           </TouchableOpacity>
 
