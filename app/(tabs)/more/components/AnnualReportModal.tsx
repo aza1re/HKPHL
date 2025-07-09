@@ -1,6 +1,6 @@
 // TODO: have an option to choose the player and year.
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Modal,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -21,6 +22,16 @@ export default function AnnualReportModal({
   visible,
   onClose,
 }: AnnualReportModalProps) {
+  useEffect(() => {
+    if (visible) {
+      // Set status bar to dark content when modal is visible
+      StatusBar.setBarStyle("dark-content", true);
+    } else {
+      // Reset status bar to light content when modal is closed
+      StatusBar.setBarStyle("light-content", true);
+    }
+  }, [visible]);
+
   return (
     <Modal
       animationType="slide"

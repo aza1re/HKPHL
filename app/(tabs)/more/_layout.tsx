@@ -40,6 +40,46 @@ export default function MoreLayout() {
           headerBackTitle: "Back",
         }}
       />
+      <Stack.Screen
+        name="about-us"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="contact-info"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="faq"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="navigation-for-teams"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
     </Stack>
   );
 }
