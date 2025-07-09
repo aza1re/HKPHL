@@ -30,11 +30,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 24,
+    padding: 12,
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
     color: "#1a1a1a",
     marginBottom: 8,
     textAlign: "center",

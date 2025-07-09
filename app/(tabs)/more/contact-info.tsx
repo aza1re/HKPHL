@@ -10,7 +10,7 @@ import {
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function AboutUsScreen() {
+export default function ContactInfoScreen() {
   const router = useRouter();
 
   return (
@@ -18,7 +18,7 @@ export default function AboutUsScreen() {
       {/* Custom Header with Exit Button */}
       <View style={styles.headerContainer}>
         <View style={styles.headerSpacer} />
-        <Text style={styles.headerTitle}>About Achieve Hockey</Text>
+        <Text style={styles.headerTitle}>Contact Information</Text>
         <TouchableOpacity
           style={styles.exitButton}
           onPress={() => router.back()}
@@ -32,23 +32,41 @@ export default function AboutUsScreen() {
       <ScrollView style={styles.scrollContent}>
         <View style={styles.contentContainer}>
           <View style={styles.contentSection}>
+            <Text style={styles.sectionTitle}>Get in Touch</Text>
             <Text style={styles.description}>
-              Achieve Hockey & Education – lorem ipsum 15 dolor sit amet
-              consectetur. Tortor dictum iaculis massa suscipit eget 350 gravida
-              malesuada. Et accumsan nunc semper orci. Sodales rhoncus vel.
+              We're here to help! Reach out to us through any of the following
+              channels:
+            </Text>
+
+            <View style={styles.contactItem}>
+              <Text style={styles.contactLabel}>Email:</Text>
+              <Text style={styles.contactValue}>info@hkphl.com</Text>
+            </View>
+
+            <View style={styles.contactItem}>
+              <Text style={styles.contactLabel}>Phone:</Text>
+              <Text style={styles.contactValue}>+852 1234 5678</Text>
+            </View>
+
+            <View style={styles.contactItem}>
+              <Text style={styles.contactLabel}>Address:</Text>
+              <Text style={styles.contactValue}>
+                HKPHL Headquarters{"\n"}
+                123 Hockey Street{"\n"}
+                Central, Hong Kong
+              </Text>
+            </View>
+
+            <Text style={styles.sectionTitle}>Office Hours</Text>
+            <Text style={styles.description}>
+              Monday - Friday: 9:00 AM - 6:00 PM{"\n"}
+              Saturday: 10:00 AM - 4:00 PM{"\n"}
+              Sunday: Closed
             </Text>
 
             <Text style={styles.description}>
-              Lorem ipsum dolor sit amet consectetur. Hac ut nec dignissim
-              hendrerit lorem. Quam quam elementum hac morbi laous. Dictumst
-              pellentesque 450 id dolor nibh at id et imperdiet. Facilisi in
-              tempor in sed habitant ut. Id sagittis massa amet a.
-            </Text>
-
-            <Text style={styles.description}>
-              Amet lacus adipiscing dolor consequat accumsan aenean leo aliquet
-              viverra. Blandit quisque etiam aliquam sem aliquet. Aliquam 93 id
-              tempor et bibendum. Sed quis id viverra arcu.
+              For urgent matters outside office hours, please email us and we'll
+              get back to you as soon as possible.
             </Text>
           </View>
         </View>
@@ -107,10 +125,30 @@ const styles = StyleSheet.create({
   contentSection: {
     padding: 15,
   },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#000",
+    marginBottom: 10,
+  },
   description: {
     fontSize: 16,
     color: "#333",
     lineHeight: 22,
     marginBottom: 16,
+  },
+  contactItem: {
+    marginBottom: 16,
+  },
+  contactLabel: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#000",
+    marginBottom: 4,
+  },
+  contactValue: {
+    fontSize: 16,
+    color: "#333",
+    lineHeight: 22,
   },
 });
