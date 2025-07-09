@@ -53,11 +53,10 @@ export default function AnnualReportModal({
         <ScrollView style={styles.modalContent}>
           <View style={styles.contentContainer}>
             <View style={styles.contentSection}>
-              <View style={styles.iconContainer}>
-                <Ionicons name="document-text" size={48} color="#D62828" />
+              <View style={styles.titleContainer}>
+                <Ionicons name="document-text" size={28} color="#D62828" />
+                <Text style={styles.title}>Full Annual Report</Text>
               </View>
-
-              <Text style={styles.title}>Full Annual Report</Text>
               <Text style={styles.subtitle}>Comprehensive Team Analytics</Text>
 
               <Text style={styles.description}>
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingTop: 10,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.3,
     borderBottomColor: "#CACDD4",
   },
   headerSpacer: {
@@ -168,22 +167,27 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 16,
-    marginTop: 10,
+    marginHorizontal: 10,
     borderRadius: 7,
   },
   contentSection: {
-    padding: 20,
+    marginHorizontal: 10,
+    marginTop: 15,
     alignItems: "center",
   },
   iconContainer: {
     marginBottom: 16,
   },
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 4,
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#000",
-    marginBottom: 4,
+    marginLeft: 8,
     textAlign: "center",
   },
   subtitle: {

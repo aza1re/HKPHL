@@ -148,6 +148,8 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     marginHorizontal: 10,
     marginVertical: 5,
+    borderWidth: 0.2,
+    borderColor: "#CACDD4",
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 3,
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   rowText: {
-    fontSize: 18,
+    fontSize: 16,
     color: "black",
     flex: 1,
   },
@@ -178,7 +180,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "black",
     marginHorizontal: 20,
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
   simpleRowText: {
-    fontSize: 18,
+    fontSize: 16,
     color: "black",
     flex: 1,
   },
@@ -205,6 +207,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     padding: 15,
+    borderWidth: 0.2,
+    borderColor: "#CACDD4",
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 3,
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   reportTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "black",
     marginLeft: 8,
