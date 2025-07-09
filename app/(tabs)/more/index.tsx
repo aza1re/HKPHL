@@ -29,7 +29,7 @@ export default function MoreScreen() {
             onPress={() => router.push("/more/registration/hkphl" as any)}
           >
             <View style={styles.iconWrapper}>
-              <MaterialIcons name="edit-square" size={25} color="black" />
+              <MaterialIcons name="edit-square" size={23} color="black" />
             </View>
             <Text style={styles.rowText}>Team registration</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -45,7 +45,7 @@ export default function MoreScreen() {
             <View style={styles.iconWrapper}>
               <MaterialCommunityIcons
                 name="robot-happy"
-                size={25}
+                size={23}
                 color="black"
               />
             </View>
@@ -99,7 +99,7 @@ export default function MoreScreen() {
         {/* Full Annual Report Section */}
         <View style={styles.reportCard}>
           <View style={styles.reportHeader}>
-            <Ionicons name="document-lock" size={26} color="black" />
+            <Ionicons name="document-lock" size={23} color="black" />
             <Text style={styles.reportTitle}>
               Full annual report for HKPHL players
             </Text>
