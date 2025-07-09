@@ -27,13 +27,6 @@ export default function MoreLayout() {
         }}
       />
       <Stack.Screen
-        name="settings"
-        options={{
-          headerShown: false,
-          headerBackTitle: "Back",
-        }}
-      />
-      <Stack.Screen
         name="ai-chatbot"
         options={{
           title: "AI Chatbot",
@@ -72,6 +65,16 @@ export default function MoreLayout() {
       />
       <Stack.Screen
         name="navigation-for-teams"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="settings"
         options={{
           headerShown: false,
           presentation: "modal",

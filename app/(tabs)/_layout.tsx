@@ -89,9 +89,7 @@ export default function TabLayout() {
         options={{
           title: "More",
           headerRight: () => (
-            <TouchableOpacity
-              onPress={() => router.push("/more/settings" as any)}
-            >
+            <TouchableOpacity onPress={() => router.push("/more/settings")}>
               <MaterialIcons
                 name="settings"
                 size={27}
