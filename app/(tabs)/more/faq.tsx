@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 16,
-    marginTop: 10,
+    marginHorizontal: 10,
+    marginTop: 5,
     borderRadius: 7,
   },
   faqItem: {

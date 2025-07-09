@@ -133,7 +133,6 @@ export default function AnnualReportModal({
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    backgroundColor: "#F7F7F7",
   },
   modalHeader: {
     flexDirection: "row",
@@ -141,7 +140,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingTop: 10,
-    backgroundColor: "#F7F7F7",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#CACDD4",
   },
   headerSpacer: {
     width: 50,
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   doneButton: {
-    paddingBottom: 5,
+    paddingBottom: 10,
     paddingHorizontal: 8,
   },
   doneButtonText: {
