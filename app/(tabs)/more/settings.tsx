@@ -48,7 +48,7 @@ export default function SettingsScreen() {
         onPress={() => setActiveSection("notifications")}
       >
         <View style={styles.iconWrapper}>
-          <Ionicons name="notifications" size={24} color="#D62828" />
+          <Ionicons name="notifications" size={20} color="#000" />
         </View>
         <Text style={styles.settingsText}>Notifications</Text>
         <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -61,7 +61,7 @@ export default function SettingsScreen() {
         onPress={() => setActiveSection("personal-data")}
       >
         <View style={styles.iconWrapper}>
-          <MaterialIcons name="person" size={24} color="#D62828" />
+          <MaterialIcons name="person" size={20} color="#000" />
         </View>
         <Text style={styles.settingsText}>Personal Data</Text>
         <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -74,7 +74,7 @@ export default function SettingsScreen() {
         onPress={() => setActiveSection("preferences")}
       >
         <View style={styles.iconWrapper}>
-          <MaterialIcons name="tune" size={24} color="#D62828" />
+          <MaterialIcons name="tune" size={20} color="#000" />
         </View>
         <Text style={styles.settingsText}>Preferences</Text>
         <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -87,7 +87,7 @@ export default function SettingsScreen() {
       style={styles.backButton}
       onPress={() => setActiveSection(null)}
     >
-      <Ionicons name="chevron-back" size={20} color="#D62828" />
+      <Ionicons name="chevron-back" size={20} color="#000" />
       <Text style={styles.backButtonText}>Back to Settings</Text>
     </TouchableOpacity>
   );
@@ -179,24 +179,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 14,
   },
   iconWrapper: {
     width: 32,
     height: 32,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 12,
+    marginRight: 10,
   },
   settingsText: {
-    fontSize: 18,
+    fontSize: 16,
     color: "black",
     flex: 1,
   },
   divider: {
     height: 1,
     backgroundColor: "#E5E5E7",
-    marginLeft: 60,
+    marginLeft: 20,
   },
   backButton: {
     flexDirection: "row",
