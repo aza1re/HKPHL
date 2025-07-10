@@ -1,113 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
+  SafeAreaView,
+  Alert,
 } from "react-native";
-import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-
-const tournaments = [
-  {
-    id: "1",
-    name: "Winter Championship 2025",
-    status: "Active",
-    participants: 16,
-  },
-  { id: "2", name: "Spring Classic", status: "Upcoming", participants: 12 },
-  {
-    id: "3",
-    name: "Summer League",
-    status: "Registration Open",
-    participants: 8,
-  },
-];
+import Header from "./components/Header";
+import CountryTabs from "./components/CountryTabs";
+import TournamentCard from "./components/TournamentCard";
+import { tournaments, countries } from "./data/tournaments";
 
 export default function TournamentsScreen() {
-  const router = useRouter();
+  const [selectedCountry, setSelectedCountry] = useState("All");
+
+  const filteredTournaments = tournaments.filter(
+    (tournament) =>
+      selectedCountry === "All" || tournament.country === selectedCountry
+  );
+
+  const handleFilterPress = () => {
+    Alert.alert(
+      "Filter Options",
+      "Advanced filtering options will be available here",
+      [{ text: "OK", style: "default" }]
+    );
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        {tournaments.map((tournament) => (
-          <TouchableOpacity
-            key={tournament.id}
-            style={styles.tournamentCard}
-            onPress={() => router.push(`/tournaments/${tournament.id}`)}
-          >
-            <View style={styles.cardHeader}>
-              <Text style={styles.tournamentName}>{tournament.name}</Text>
-              <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
-            </View>
-            <View style={styles.cardInfo}>
-              <Text style={styles.status}>{tournament.status}</Text>
-              <Text style={styles.participants}>
-                {tournament.participants} teams
-              </Text>
-            </View>
-          </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <Header
+        title="Tournaments"
+        onFilterPress={handleFilterPress}
+        showFilter={true}
+      />
+
+      <CountryTabs
+        countries={countries}
+        selectedCountry={selectedCountry}
+        onCountrySelect={setSelectedCountry}
+      />
+
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {filteredTournaments.map((tournament) => (
+          <TournamentCard key={tournament.id} tournament={tournament} />
         ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 5,
+    backgroundColor: "#F5F5F5",
   },
-  header: {
-    padding: 24,
-    backgroundColor: "#f8f9fa",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-  },
-  content: {
-    padding: 16,
-  },
-  tournamentCard: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: "#e5e5e7",
-  },
-  cardHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  tournamentName: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#1a1a1a",
+  scrollView: {
     flex: 1,
   },
-  cardInfo: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  status: {
-    fontSize: 14,
-    color: "#007AFF",
-    fontWeight: "500",
-  },
-  participants: {
-    fontSize: 14,
-    color: "#8E8E93",
+  scrollContent: {
+    padding: 16,
   },
 });
