@@ -1,13 +1,14 @@
 // expo.config.js
 export default {
   expo: {
-    name: "hockey-app",
-    slug: "hockey-app",
+    name: "Achieve Hockey",
+    slug: "achieve-hockey",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
     newArchEnabled: true,
+    scheme: "achievehockey",
     splash: {
       image: "./assets/splash-icon.png",
       resizeMode: "contain",

@@ -2,7 +2,17 @@ import { Stack } from "expo-router";
 
 export default function MoreLayout() {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#D62828",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontSize: 20,
+        },
+      }}
+    >
       <Stack.Screen
         name="index"
         options={{
@@ -11,13 +21,6 @@ export default function MoreLayout() {
       />
       <Stack.Screen
         name="registration"
-        options={{
-          headerShown: false,
-          headerBackTitle: "Back",
-        }}
-      />
-      <Stack.Screen
-        name="settings"
         options={{
           headerShown: false,
           headerBackTitle: "Back",
@@ -33,15 +36,51 @@ export default function MoreLayout() {
       <Stack.Screen
         name="about-us"
         options={{
-          title: "About Us",
-          headerBackTitle: "Back",
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
         }}
       />
       <Stack.Screen
-        name="annual-report"
+        name="contact-info"
         options={{
-          title: "Annual Report",
-          headerBackTitle: "Back",
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="faq"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="navigation-for-teams"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="settings"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          contentStyle: {
+            backgroundColor: "#F7F7F7",
+          },
         }}
       />
     </Stack>

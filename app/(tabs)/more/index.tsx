@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,35 +7,47 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import AnnualReportModal from "./components/AnnualReportModal";
 
 export default function MoreScreen() {
   const router = useRouter();
+  const [annualReportModalVisible, setAnnualReportModalVisible] =
+    useState(false);
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
-        {/* Team Registration + Chatbot Section */}
+        {/* Team Registration Section */}
         <View style={styles.card}>
           <TouchableOpacity
             style={styles.row}
             onPress={() => router.push("/more/registration/hkphl" as any)}
           >
             <View style={styles.iconWrapper}>
-              <Ionicons name="create" size={20} color="black" />
+              <MaterialIcons name="edit-square" size={23} color="black" />
             </View>
             <Text style={styles.rowText}>Team registration</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
           </TouchableOpacity>
+        </View>
 
-          <View style={styles.divider} />
-
+        {/* Chatbot Section */}
+        <View style={styles.card}>
           <TouchableOpacity
             style={styles.row}
             onPress={() => router.push("/more/ai-chatbot" as any)}
           >
             <View style={styles.iconWrapper}>
-              <Ionicons name="sparkles" size={20} color="black" />
+              <MaterialCommunityIcons
+                name="robot-happy"
+                size={23}
+                color="black"
+              />
             </View>
             <Text style={styles.rowText}>Chatbot – ultimate guide</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -49,7 +61,7 @@ export default function MoreScreen() {
             style={styles.simpleRow}
             onPress={() => router.push("/more/about-us" as any)}
           >
-            <Text style={styles.simpleRowText}>What do we do?</Text>
+            <Text style={styles.simpleRowText}>About Achieve Hockey</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
           </TouchableOpacity>
 
@@ -57,7 +69,7 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.simpleRow}
-            onPress={() => router.push("/more/about-us" as any)}
+            onPress={() => router.push("/more/contact-info" as any)}
           >
             <Text style={styles.simpleRowText}>Contact information</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -67,7 +79,7 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.simpleRow}
-            onPress={() => router.push("/more/about-us" as any)}
+            onPress={() => router.push("/more/faq" as any)}
           >
             <Text style={styles.simpleRowText}>FAQ</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -77,7 +89,7 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.simpleRow}
-            onPress={() => router.push("/more/about-us" as any)}
+            onPress={() => router.push("/more/navigation-for-teams" as any)}
           >
             <Text style={styles.simpleRowText}>Navigation for teams</Text>
             <Ionicons name="chevron-forward" size={20} color="#8E8E93" />
@@ -87,7 +99,7 @@ export default function MoreScreen() {
         {/* Full Annual Report Section */}
         <View style={styles.reportCard}>
           <View style={styles.reportHeader}>
-            <Ionicons name="document-text" size={24} color="black" />
+            <Ionicons name="document-lock" size={23} color="black" />
             <Text style={styles.reportTitle}>
               Full annual report for HKPHL players
             </Text>
@@ -100,12 +112,24 @@ export default function MoreScreen() {
 
           <TouchableOpacity
             style={styles.requestButton}
-            onPress={() => router.push("/more/annual-report" as any)}
+            onPress={() => setAnnualReportModalVisible(true)}
           >
             <Text style={styles.requestButtonText}>Request</Text>
           </TouchableOpacity>
         </View>
+
+        {/* App Info Section */}
+        <View style={styles.appInfoSection}>
+          <View style={styles.appIconPlaceholder}></View>
+          <Text style={styles.appVersion}>Achieve Hockey 1.0.0</Text>
+        </View>
       </ScrollView>
+
+      {/* Modals */}
+      <AnnualReportModal
+        visible={annualReportModalVisible}
+        onClose={() => setAnnualReportModalVisible(false)}
+      />
     </View>
   );
 }
@@ -117,20 +141,20 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+    paddingTop: 15,
   },
   card: {
     backgroundColor: "white",
-    borderRadius: 12,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    borderRadius: 7,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderWidth: 0.2,
+    borderColor: "#CACDD4",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+    shadowOffset: { width: 0, height: 0 },
   },
   row: {
     flexDirection: "row",
@@ -147,22 +171,21 @@ const styles = StyleSheet.create({
   },
   rowText: {
     fontSize: 16,
-    fontWeight: "500",
     color: "black",
     flex: 1,
   },
   divider: {
     height: 1,
     backgroundColor: "#E5E5E7",
-    marginHorizontal: 16,
+    marginLeft: 12,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "black",
     marginHorizontal: 20,
-    marginTop: 30,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 5,
   },
   simpleRow: {
     flexDirection: "row",
@@ -179,19 +202,18 @@ const styles = StyleSheet.create({
   },
   reportCard: {
     backgroundColor: "white",
-    borderRadius: 12,
-    marginHorizontal: 20,
+    borderRadius: 7,
+    marginHorizontal: 10,
     marginTop: 20,
     marginBottom: 20,
     padding: 15,
+    borderWidth: 0.2,
+    borderColor: "#CACDD4",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+    shadowOffset: { width: 0, height: 0 },
   },
   reportHeader: {
     flexDirection: "row",
@@ -212,15 +234,34 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   requestButton: {
-    backgroundColor: "#FFD600",
-    borderRadius: 12,
+    backgroundColor: "#F5EF34",
+    borderRadius: 10,
     height: 40,
     justifyContent: "center",
     alignItems: "center",
   },
   requestButtonText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 600,
     color: "black",
+  },
+  appInfoSection: {
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  appIconPlaceholder: {
+    width: 25,
+    height: 25,
+    borderRadius: 7,
+    backgroundColor: "#F0F0F0",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#E5E5E7",
+  },
+  appVersion: {
+    fontSize: 12,
+    color: "grey",
   },
 });
