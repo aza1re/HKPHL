@@ -4,8 +4,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
+  Dimensions,
 } from "react-native";
+
+const { width } = Dimensions.get("window");
 
 interface CountryTabsProps {
   countries: string[];
@@ -18,22 +20,18 @@ export default function CountryTabs({
   selectedCountry,
   onCountrySelect,
 }: CountryTabsProps) {
+  const tabWidth = width / countries.length;
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
+      <View style={styles.topBorder} />
+      <View style={styles.tabsWrapper}>
         {countries.map((country) => (
           <TouchableOpacity
             key={country}
-            style={[
-              styles.tab,
-              selectedCountry === country && styles.activeTab,
-            ]}
+            style={[styles.tab, { width: tabWidth }]}
             onPress={() => onCountrySelect(country)}
-            activeOpacity={0.7}
+            activeOpacity={0.8}
           >
             <Text
               style={[
@@ -43,49 +41,54 @@ export default function CountryTabs({
             >
               {country}
             </Text>
-            {selectedCountry === country && <View style={styles.indicator} />}
+            {selectedCountry === country && <View style={styles.underline} />}
           </TouchableOpacity>
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#D62828",
-    paddingBottom: 16,
+    backgroundColor: "#D52B1E",
+    position: "relative",
   },
-  scrollContent: {
-    paddingHorizontal: 20,
+  topBorder: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 0.5,
+    backgroundColor: "#FFFFFF",
+  },
+  tabsWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   tab: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    marginRight: 8,
-    borderRadius: 25,
-    backgroundColor: "rgba(255, 255, 255, 0.15)",
-    position: "relative",
     alignItems: "center",
     justifyContent: "center",
-  },
-  activeTab: {
-    backgroundColor: "#FFFFFF",
+    paddingVertical: 10,
+    position: "relative",
   },
   tabText: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "400",
     color: "#FFFFFF",
+    textAlign: "center",
   },
   activeTabText: {
-    color: "#D62828",
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
-  indicator: {
+  underline: {
     position: "absolute",
-    bottom: -8,
-    width: 6,
-    height: 6,
-    backgroundColor: "#D62828",
-    borderRadius: 3,
+    bottom: 6,
+    width: "50%",
+    height: 2,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 1,
+    alignSelf: "center",
   },
 });
