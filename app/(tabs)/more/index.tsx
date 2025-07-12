@@ -13,6 +13,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import AnnualReportModal from "./components/AnnualReportModal";
+import Header from "./components/Header";
 
 export default function MoreScreen() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function MoreScreen() {
 
   return (
     <View style={styles.container}>
+      <Header title="More" />
       <ScrollView style={styles.scrollContainer}>
         {/* Team Registration Section */}
         <View style={styles.card}>

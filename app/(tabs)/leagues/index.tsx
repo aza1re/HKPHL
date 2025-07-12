@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Header from "./components/Header";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -52,18 +53,13 @@ function NewsTab() {
 export default function LeaguesScreen() {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>HKPHL</Text>
-        <Text style={styles.subtitle}>
-          Hong Kong Professional Hockey League
-        </Text>
-      </View>
+      <Header title="Leagues" />
 
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: "#007AFF",
+          tabBarActiveTintColor: "#D52B1E",
           tabBarInactiveTintColor: "#8E8E93",
-          tabBarIndicatorStyle: { backgroundColor: "#007AFF" },
+          tabBarIndicatorStyle: { backgroundColor: "#D52B1E" },
           tabBarLabelStyle: { fontSize: 12, fontWeight: "600" },
           tabBarStyle: { backgroundColor: "#fff" },
         }}
@@ -81,22 +77,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  header: {
-    padding: 24,
-    backgroundColor: "#f8f9fa",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e7",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
   },
   tabContainer: {
     flex: 1,

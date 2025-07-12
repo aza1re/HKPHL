@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Header from "./components/Header";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -41,11 +42,12 @@ function ShowcasesTab() {
 export default function EducationScreen() {
   return (
     <View style={styles.container}>
+      <Header title="Education" />
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: "#007AFF",
+          tabBarActiveTintColor: "#D52B1E",
           tabBarInactiveTintColor: "#8E8E93",
-          tabBarIndicatorStyle: { backgroundColor: "#007AFF" },
+          tabBarIndicatorStyle: { backgroundColor: "#D52B1E" },
           tabBarLabelStyle: { fontSize: 14, fontWeight: "600" },
           tabBarStyle: { backgroundColor: "#fff" },
         }}
