@@ -7,6 +7,7 @@ import {
   StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useFonts, BakbakOne_400Regular } from "@expo-google-fonts/bakbak-one";
 
 interface HeaderProps {
   title: string;
@@ -19,6 +20,14 @@ export default function Header({
   onFilterPress,
   showFilter = true,
 }: HeaderProps) {
+  const [fontsLoaded] = useFonts({
+    BakbakOne_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#D52B1E" />
@@ -53,9 +62,11 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
     color: "#FFFFFF",
+    fontFamily: "BakbakOne_400Regular",
+    letterSpacing: 0.5,
   },
   filterButton: {
     marginTop: 3,
