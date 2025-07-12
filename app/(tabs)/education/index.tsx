@@ -1,37 +1,33 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
 import Header from "./components/Header";
 import EducationTabs from "./components/EducationTabs";
+import EducationCard from "./components/EducationCard";
+import { educationData, EducationItem } from "./data/education";
 
 function HockeyCampsContent() {
+  const campData = educationData.filter((item) => item.type === "camp");
+
   return (
     <ScrollView style={styles.contentContainer}>
       <View style={styles.content}>
-        <Text style={styles.contentTitle}>Hockey Camps</Text>
-        <Text style={styles.contentDescription}>
-          Professional hockey training camps for all skill levels
-        </Text>
-        <Text style={styles.placeholder}>
-          Hockey camp schedules, registration, and training programs will be
-          displayed here
-        </Text>
+        {campData.map((item) => (
+          <EducationCard key={item.id} item={item} />
+        ))}
       </View>
     </ScrollView>
   );
 }
 
 function ShowcasesContent() {
+  const showcaseData = educationData.filter((item) => item.type === "showcase");
+
   return (
     <ScrollView style={styles.contentContainer}>
       <View style={styles.content}>
-        <Text style={styles.contentTitle}>Showcases</Text>
-        <Text style={styles.contentDescription}>
-          Talent showcase events and competitions
-        </Text>
-        <Text style={styles.placeholder}>
-          Showcase events, schedules, and registration information will be
-          displayed here
-        </Text>
+        {showcaseData.map((item) => (
+          <EducationCard key={item.id} item={item} />
+        ))}
       </View>
     </ScrollView>
   );
@@ -79,24 +75,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   content: {
-    padding: 24,
-  },
-  contentTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 8,
-  },
-  contentDescription: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 24,
-    lineHeight: 22,
-  },
-  placeholder: {
-    fontSize: 16,
-    color: "#8E8E93",
-    textAlign: "center",
-    lineHeight: 24,
+    padding: 16,
   },
 });
