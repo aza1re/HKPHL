@@ -48,6 +48,7 @@ export default function TabLayout() {
         name="tournaments"
         options={{
           title: "Tourneys",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="sports-hockey" size={size + 3} color={color} />
           ),
