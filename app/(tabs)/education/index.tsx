@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Header from "./components/Header";
+import EducationTabs from "./components/EducationTabs";
 
-const Tab = createMaterialTopTabNavigator();
-
-function HockeyCampsTab() {
+function HockeyCampsContent() {
   return (
-    <ScrollView style={styles.tabContainer}>
+    <ScrollView style={styles.contentContainer}>
       <View style={styles.content}>
-        <Text style={styles.tabTitle}>Hockey Camps</Text>
-        <Text style={styles.tabDescription}>
+        <Text style={styles.contentTitle}>Hockey Camps</Text>
+        <Text style={styles.contentDescription}>
           Professional hockey training camps for all skill levels
         </Text>
         <Text style={styles.placeholder}>
@@ -22,12 +20,12 @@ function HockeyCampsTab() {
   );
 }
 
-function ShowcasesTab() {
+function ShowcasesContent() {
   return (
-    <ScrollView style={styles.tabContainer}>
+    <ScrollView style={styles.contentContainer}>
       <View style={styles.content}>
-        <Text style={styles.tabTitle}>Showcases</Text>
-        <Text style={styles.tabDescription}>
+        <Text style={styles.contentTitle}>Showcases</Text>
+        <Text style={styles.contentDescription}>
           Talent showcase events and competitions
         </Text>
         <Text style={styles.placeholder}>
@@ -40,21 +38,33 @@ function ShowcasesTab() {
 }
 
 export default function EducationScreen() {
+  const [activeTab, setActiveTab] = useState("camps");
+
+  const handleFilterPress = () => {
+    // Filter functionality can be implemented here
+    console.log("Filter pressed in Education tab");
+  };
+
+  const handleTabPress = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "camps":
+        return <HockeyCampsContent />;
+      case "showcases":
+        return <ShowcasesContent />;
+      default:
+        return <HockeyCampsContent />;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Header title="Education" />
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveTintColor: "#D52B1E",
-          tabBarInactiveTintColor: "#8E8E93",
-          tabBarIndicatorStyle: { backgroundColor: "#D52B1E" },
-          tabBarLabelStyle: { fontSize: 14, fontWeight: "600" },
-          tabBarStyle: { backgroundColor: "#fff" },
-        }}
-      >
-        <Tab.Screen name="Hockey Camps" component={HockeyCampsTab} />
-        <Tab.Screen name="Showcases" component={ShowcasesTab} />
-      </Tab.Navigator>
+      <Header title="Education" onFilterPress={handleFilterPress} />
+      <EducationTabs activeTab={activeTab} onTabPress={handleTabPress} />
+      {renderContent()}
     </View>
   );
 }
@@ -64,36 +74,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  header: {
-    padding: 24,
-    backgroundColor: "#f8f9fa",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e7",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-  },
-  tabContainer: {
+  contentContainer: {
     flex: 1,
     backgroundColor: "#fff",
   },
   content: {
     padding: 24,
   },
-  tabTitle: {
+  contentTitle: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#1a1a1a",
     marginBottom: 8,
   },
-  tabDescription: {
+  contentDescription: {
     fontSize: 16,
     color: "#666",
     marginBottom: 24,

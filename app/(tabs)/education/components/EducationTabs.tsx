@@ -9,39 +9,42 @@ import {
 
 const { width } = Dimensions.get("window");
 
-interface CountryTabsProps {
-  countries: string[];
-  selectedCountry: string;
-  onCountrySelect: (country: string) => void;
+interface EducationTabsProps {
+  activeTab: string;
+  onTabPress: (tab: string) => void;
 }
 
-export default function CountryTabs({
-  countries,
-  selectedCountry,
-  onCountrySelect,
-}: CountryTabsProps) {
-  const tabWidth = width / countries.length;
+const tabs = [
+  { id: "camps", label: "Hockey Camps" },
+  { id: "showcases", label: "Showcases" },
+];
+
+export default function EducationTabs({
+  activeTab,
+  onTabPress,
+}: EducationTabsProps) {
+  const tabWidth = width / tabs.length;
 
   return (
     <View style={styles.container}>
       <View style={styles.topBorder} />
       <View style={styles.tabsWrapper}>
-        {countries.map((country) => (
+        {tabs.map((tab) => (
           <TouchableOpacity
-            key={country}
+            key={tab.id}
             style={[styles.tab, { width: tabWidth }]}
-            onPress={() => onCountrySelect(country)}
+            onPress={() => onTabPress(tab.id)}
             activeOpacity={0.8}
           >
             <Text
               style={[
                 styles.tabText,
-                selectedCountry === country && styles.activeTabText,
+                activeTab === tab.id && styles.activeTabText,
               ]}
             >
-              {country}
+              {tab.label}
             </Text>
-            {selectedCountry === country && <View style={styles.underline} />}
+            {activeTab === tab.id && <View style={styles.underline} />}
           </TouchableOpacity>
         ))}
       </View>
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
   underline: {
     position: "absolute",
     bottom: 6,
-    width: "50%",
+    width: "55%",
     height: 2,
     backgroundColor: "#FFFFFF",
     borderRadius: 1,

@@ -18,7 +18,7 @@ interface HeaderProps {
 export default function Header({
   title,
   onFilterPress,
-  showFilter = false,
+  showFilter = true,
 }: HeaderProps) {
   const [fontsLoaded] = useFonts({
     BakbakOne_400Regular,
