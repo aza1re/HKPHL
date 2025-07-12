@@ -1,58 +1,66 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
+import Header from "./components/Header";
+import EducationTabs from "./components/EducationTabs";
+import EducationCard from "./components/EducationCard";
+import { educationData, EducationItem } from "./data/education";
 
-const Tab = createMaterialTopTabNavigator();
+function HockeyCampsContent() {
+  const campData = educationData.filter((item) => item.type === "camp");
 
-function HockeyCampsTab() {
   return (
-    <ScrollView style={styles.tabContainer}>
+    <ScrollView style={styles.contentContainer}>
       <View style={styles.content}>
-        <Text style={styles.tabTitle}>Hockey Camps</Text>
-        <Text style={styles.tabDescription}>
-          Professional hockey training camps for all skill levels
-        </Text>
-        <Text style={styles.placeholder}>
-          Hockey camp schedules, registration, and training programs will be
-          displayed here
-        </Text>
+        {campData.map((item) => (
+          <EducationCard key={item.id} item={item} />
+        ))}
       </View>
     </ScrollView>
   );
 }
 
-function ShowcasesTab() {
+function ShowcasesContent() {
+  const showcaseData = educationData.filter((item) => item.type === "showcase");
+
   return (
-    <ScrollView style={styles.tabContainer}>
+    <ScrollView style={styles.contentContainer}>
       <View style={styles.content}>
-        <Text style={styles.tabTitle}>Showcases</Text>
-        <Text style={styles.tabDescription}>
-          Talent showcase events and competitions
-        </Text>
-        <Text style={styles.placeholder}>
-          Showcase events, schedules, and registration information will be
-          displayed here
-        </Text>
+        {showcaseData.map((item) => (
+          <EducationCard key={item.id} item={item} />
+        ))}
       </View>
     </ScrollView>
   );
 }
 
 export default function EducationScreen() {
+  const [activeTab, setActiveTab] = useState("camps");
+
+  const handleFilterPress = () => {
+    // Filter functionality can be implemented here
+    console.log("Filter pressed in Education tab");
+  };
+
+  const handleTabPress = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "camps":
+        return <HockeyCampsContent />;
+      case "showcases":
+        return <ShowcasesContent />;
+      default:
+        return <HockeyCampsContent />;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveTintColor: "#007AFF",
-          tabBarInactiveTintColor: "#8E8E93",
-          tabBarIndicatorStyle: { backgroundColor: "#007AFF" },
-          tabBarLabelStyle: { fontSize: 14, fontWeight: "600" },
-          tabBarStyle: { backgroundColor: "#fff" },
-        }}
-      >
-        <Tab.Screen name="Hockey Camps" component={HockeyCampsTab} />
-        <Tab.Screen name="Showcases" component={ShowcasesTab} />
-      </Tab.Navigator>
+      <Header title="Education" onFilterPress={handleFilterPress} />
+      <EducationTabs activeTab={activeTab} onTabPress={handleTabPress} />
+      {renderContent()}
     </View>
   );
 }
@@ -62,45 +70,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  header: {
-    padding: 24,
-    backgroundColor: "#f8f9fa",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e7",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-  },
-  tabContainer: {
+  contentContainer: {
     flex: 1,
     backgroundColor: "#fff",
   },
   content: {
-    padding: 24,
-  },
-  tabTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#1a1a1a",
-    marginBottom: 8,
-  },
-  tabDescription: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 24,
-    lineHeight: 22,
-  },
-  placeholder: {
-    fontSize: 16,
-    color: "#8E8E93",
-    textAlign: "center",
-    lineHeight: 24,
+    padding: 16,
   },
 });

@@ -15,7 +15,7 @@ export default function TournamentsLayout() {
           title: "Tournament Details",
           headerBackTitle: "Back",
           headerStyle: {
-            backgroundColor: "#D62828",
+            backgroundColor: "#D52B1E",
           },
           headerTintColor: "#fff",
           headerTitleStyle: {

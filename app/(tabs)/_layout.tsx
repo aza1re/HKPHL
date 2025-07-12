@@ -48,6 +48,7 @@ export default function TabLayout() {
         name="tournaments"
         options={{
           title: "Tourneys",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="sports-hockey" size={size + 3} color={color} />
           ),
@@ -57,6 +58,7 @@ export default function TabLayout() {
         name="education"
         options={{
           title: "Education",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="backpack" size={size} color={color} />
           ),
@@ -66,6 +68,7 @@ export default function TabLayout() {
         name="leagues"
         options={{
           title: "Leagues",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="trophy-variant"
@@ -79,6 +82,7 @@ export default function TabLayout() {
         name="favourites"
         options={{
           title: "Favourites",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="heart" size={size} color={color} />
           ),
@@ -88,16 +92,7 @@ export default function TabLayout() {
         name="more"
         options={{
           title: "More",
-          headerRight: () => (
-            <TouchableOpacity onPress={() => router.push("/more/settings")}>
-              <MaterialIcons
-                name="settings"
-                size={27}
-                color="#fff"
-                style={{ marginRight: 18 }}
-              />
-            </TouchableOpacity>
-          ),
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="ellipsis-horizontal" size={size} color={color} />
           ),
