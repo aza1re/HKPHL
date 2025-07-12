@@ -30,22 +30,22 @@ function OverviewTab({ tournament }: { tournament: TournamentDetails }) {
         <Text style={styles.sectionTitle}>Tournament Information</Text>
 
         <View style={styles.infoRow}>
-          <Ionicons name="calendar" size={20} color="#D62828" />
+          <Ionicons name="calendar" size={20} color="#D52B1E" />
           <Text style={styles.infoText}>{tournament.date}</Text>
         </View>
 
         <View style={styles.infoRow}>
-          <Ionicons name="location" size={20} color="#D62828" />
+          <Ionicons name="location" size={20} color="#D52B1E" />
           <Text style={styles.infoText}>{tournament.location}</Text>
         </View>
 
         <View style={styles.infoRow}>
-          <Ionicons name="people" size={20} color="#D62828" />
+          <Ionicons name="people" size={20} color="#D52B1E" />
           <Text style={styles.infoText}>{tournament.participants} teams</Text>
         </View>
 
         <View style={styles.infoRow}>
-          <Ionicons name="trophy" size={20} color="#D62828" />
+          <Ionicons name="trophy" size={20} color="#D52B1E" />
           <Text
             style={[
               styles.infoText,
@@ -198,9 +198,9 @@ export default function TournamentDetailsScreen() {
     <View style={styles.container}>
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: "#D62828",
+          tabBarActiveTintColor: "#D52B1E",
           tabBarInactiveTintColor: "#8E8E93",
-          tabBarIndicatorStyle: { backgroundColor: "#D62828" },
+          tabBarIndicatorStyle: { backgroundColor: "#D52B1E" },
           tabBarLabelStyle: { fontSize: 14, fontWeight: "600" },
           tabBarStyle: { backgroundColor: "#fff" },
         }}
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   standingsRank: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#D62828",
+    color: "#D52B1E",
     flex: 1,
     textAlign: "center",
   },
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
   matchDate: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#D62828",
+    color: "#D52B1E",
   },
   matchTime: {
     fontSize: 16,

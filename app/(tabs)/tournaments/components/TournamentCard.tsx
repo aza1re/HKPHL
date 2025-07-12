@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#D62828",
+    color: "#D52B1E",
     marginBottom: 4,
     lineHeight: 22,
   },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#333333",
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: 8,
   },
   tagText: {
     fontSize: 12,

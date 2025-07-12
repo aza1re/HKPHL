@@ -21,7 +21,7 @@ export default function Header({
 }: HeaderProps) {
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#D62828" />
+      <StatusBar barStyle="light-content" backgroundColor="#D52B1E" />
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         {showFilter && (
@@ -30,7 +30,7 @@ export default function Header({
             onPress={onFilterPress}
             activeOpacity={0.7}
           >
-            <Ionicons name="menu" size={24} color="#FFFFFF" />
+            <Ionicons name="filter" size={26} color="#FFFFFF" />
           </TouchableOpacity>
         )}
       </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#D62828",
+    backgroundColor: "#D52B1E",
     paddingHorizontal: 20,
     paddingVertical: 16,
     elevation: 4,
@@ -58,8 +58,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   filterButton: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    marginTop: 3,
   },
 });
